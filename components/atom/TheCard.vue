@@ -3,7 +3,7 @@ import { cva } from "class-variance-authority";
 
 interface IProps {
 	as: string | object;
-	rounded: 'none' | 'sm' | 'md' | 'lg';
+	rounded: 'none' | 'sm' | 'md' | 'lg' | 'xl';
 	shadow: 'none' | 'md' | 'lg' | 'xl';
 	activeClass: string;
 }
