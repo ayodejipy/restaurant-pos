@@ -18,7 +18,7 @@ const props = withDefaults(defineProps<Partial<IProps>>(), {
 })
 
 const linkClasses = computed<string>(() => {
-	return cva("nav-link flex items-center flex-1 p-2", {
+	return cva("nav-link flex items-center p-2", {
 		variants: {
 			rounded: {
 				sm: "rounded-sm",

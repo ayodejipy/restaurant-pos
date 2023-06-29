@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { useVuelidate } from "@vuelidate/core";
+import type { ChildLinks } from "~/components/DropdownMenu.vue";
 import useValidator from "~/composables/useValidator";
 
 //  modal functions
@@ -15,7 +16,7 @@ const categories: Record<string, string>[] = [
     { title: "Beverage", sub: "beverage" },
     { title: "Other", sub: "other" },
 ];
-const subMenus: Record<string, string>[] = [
+const subMenus: ChildLinks[] = [
     { name: "Account", url: "/account" },
     { name: "Billing", url: "/billing" },
     { name: "Preferences", url: "/preferences" },
@@ -97,13 +98,7 @@ async function submit() {
             <div class="relative w-48 px-3 py-2.5 border border-gray-800">
                 <AtomTheLink url="/" left-icon="material-symbols:home-rounded" class="text-gray-700 font-normal hover:bg-gray-100"> Homepage </AtomTheLink>
                 <AtomTheLink url="/" left-icon="ph:gear-six-bold" class="text-gray-700 font-normal hover:bg-blue-100 hover:text-blue-500"> Settings </AtomTheLink>
-                <DropdownMenu 
-                    :is-open="isOpen" 
-                    class="font-normal text-gray-700 w-full" 
-                    left-icon="ph:gear-six-bold" 
-                    @click="toggleMenu"
-                    :sub-menus="subMenus"
-                >
+                <DropdownMenu class="font-normal text-gray-700 w-full" :is-open="isOpen" :sub-menus="subMenus" left-icon="ph:gear-six-bold" @click="toggleMenu">
                     <div class="flex-1 flex items-center justify-between">
                         <span class="text-gray-700">Settings</span>
                         <Icon :name="isOpen ? 'ic:outline-keyboard-arrow-up' : 'ic:outline-keyboard-arrow-down'" />
@@ -113,10 +108,35 @@ async function submit() {
         </div>
 
         <hr class="my-3" />
-        <div class="max-w-lg">
-            <AtomTheCard>
-                Hello.. card content
-            </AtomTheCard>
+        <div class="max-w-6xl bg-gray-100 p-3">
+            <div class="flex gap-10">
+                <AtomTheCard v-for="n in 3" :key="n" class="border bg-white" shadow="lg">
+                    <div class="flex flex-col items-center justify-center p-6">
+                        <div class="w-10 h-10 flex items-center justify-center rounded-full bg-gray-100 mb-2">
+                            <Icon name="clarity:bank-solid-badged" class="text-green-500" />
+                        </div>
+                        <h5 class="font-semibold text-sm text-green-500">11,25,140</h5>
+                        <p class="text-xs text-gray-400">Interest Savings</p>
+                    </div>
+                    <div class="flex flex-nowrap border-t border-gray-300 divide-x divide-gray-300">
+                        <div class="basis-1/2 p-3">
+                            <p class="text-xs font-normal text-gray-400">Additional Payment</p>
+                            <h5 class="text-sm font-semibold text-gray-900">$10,184</h5>
+                        </div>
+                        <div class="basis-1/2 p-3">
+                            <p class="text-xs font-normal text-gray-400">Total Monthly Payment</p>
+                            <h5 class="text-sm font-semibold text-gray-900">$10,184</h5>
+                        </div>
+                    </div>
+                </AtomTheCard>
+            </div>
+        </div>
+
+        <hr class="my-3" />
+        <div class="max-w-6xl bg-gray-100 p-3">
+            <!-- <Multiselect /> -->
+            <AtomTheAvatar size="lg" name="Ayodeji Jegede" url="https://wallpaper.dog/large/5568021.jpg" />
+            <AtomTheAvatar size="sm" name="African man smiling" url="https://img.freepik.com/free-photo/close-up-portrait-dark-skinned-adult-man-with-thick-bristle-smiles-toothy-wears-big-optical-glasses-striped-jumper-glad-meet-friend_273609-38587.jpg?w=2000&t=st=1687988303~exp=1687988903~hmac=31692939773f6532f629fd91604bed4f7e9b36b0a4b552fa269be05548c766b0" />
         </div>
     </div>
 </template>

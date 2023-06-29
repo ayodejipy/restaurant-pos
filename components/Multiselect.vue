@@ -14,27 +14,18 @@ const props = withDefaults(defineProps<Partial<IProps>>() , {
     placeholder: ""
 });
 
-const emits = defineEmits(["update:modelValue"]);
 
-// inject the provided props here
-const field = inject("field", props); 
-
-function onChange(event: Event) {
-    emits("update:modelValue", (event.target as HTMLSelectElement)?.value);
-}
 </script>
 
 <template>
 	<div class="relative cursor-pointer">
-		<select 
-			:id="field.id" 
-			:name="field.id"
-			:value="modelValue" 
-			@input="onChange"
-			:class="['relative w-full px-4 border appearance-none text-gray-800 text-xs h-12', field.invalid ? 'border-red-500' : 'border-gray-400']"
+		<select
+			class="relative w-full px-4 border appearance-none text-gray-800 text-xs h-12 border-gray-400"
 		>
-			<option value="" disabled selected>{{ field.placeholder }}</option>
-			<slot></slot>
+			<option value="" disabled selected>Select Item</option>
+			<option value="1">One Item</option>
+			<option value="2">Two Item</option>
+			<option value="3">Three Item </option>
 		</select>
 		<span class="inline-block absolute top-50 transform translate-y-1/2 right-2">
 			<Icon name="ic:outline-keyboard-arrow-down" size="1.2em" class="text-gray-400" />

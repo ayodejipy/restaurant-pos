@@ -3,8 +3,8 @@ import { cva } from "class-variance-authority";
 
 interface IProps {
 	as: string | object;
-	rounded: 'sm' | 'md' | 'lg';
-	shadow: 'md' | 'lg' | 'xl';
+	rounded: 'none' | 'sm' | 'md' | 'lg';
+	shadow: 'none' | 'md' | 'lg' | 'xl';
 	activeClass: string;
 }
 
@@ -15,27 +15,29 @@ const props = withDefaults(defineProps<Partial<IProps>>(), {
 	activeClass: 'active',
 })
 
-const linkClasses = computed<string>(() => {
-	return cva("w-full p-2 bg-white shadow", {
+const cardClass = computed<string>(() => {
+	return cva("w-full", {
 		variants: {
 			rounded: {
+				none: "rounded-none",
 				sm: "rounded-sm",
 				md: "rounded-md",
 				lg: "rounded-lg",
 				xl: "rounded-xl",
 			},
 			shadow: {
-				md: "drop-shadow-md",
-				lg: "drop-shadow-lg",
-                xl: "drop-shadow-xl",
+				none: 'shadow-none',
+				md: "shadow-md",
+				lg: "shadow-lg",
+                xl: "shadow-xl",
 			}
 		}
-	})({ rounded: props.rounded, shadow: props.shadow})
+	})({ rounded: props.rounded, shadow: props.shadow })
 })
 </script>
 
 <template>
-	<component :is="props.as" aria-label="card" :class="linkClasses">
+	<component :is="props.as" aria-label="card" :class="cardClass" tabindex="0">
 		<slot />
 	</component>
 </template>
