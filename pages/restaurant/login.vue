@@ -2,24 +2,21 @@
 definePageMeta({
     layout: false,
 })
-const supabase = useSupabaseClient()
+const { $toast } = useNuxtApp();
 
 const loading = ref<boolean>(false)
 const email = ref<string>('')
 
 const handleLogin = async () => {
-    try {
-        loading.value = true
-        const { error } = await supabase.auth.signInWithOtp({ email: email.value })
-        if (error) throw error
-        alert('Check your email for the login link!')
-    } catch (error: any) {
-		alert(error.error_description || error.message)
-		return { error }
-    } finally {
-        loading.value = false
-    }
+	// loading.value = true
+	const body = { email: email.value }
+	console.log('submitted')
+	const { data, error } = await $fetch<{ data: any, error: any }>('/api/login', { method: "POST", body })
+	if (data.user ) return console.log({ data})
+	if (error) return $toast.error("Something went wrong...")
 }
+
+// onMounted(() => console.log($toast.success('Testing toast') ))
 </script>
 
 <template>
@@ -41,7 +38,7 @@ const handleLogin = async () => {
 						<AtomInput type="email" v-model="email" placeholder="Your email" rounded="md" />
 					</Field>
 
-					<AtomTheButton rounded="md" intent="default" :loading="loading" class="w-full bg-blue-600 text-white font-medium mt-4">Login</AtomTheButton>
+					<AtomTheButton type="submit" rounded="md" intent="default" :loading="loading" class="w-full bg-blue-600 text-white font-medium mt-4">Login</AtomTheButton>
 				</form>
 			</div>
         </div>
