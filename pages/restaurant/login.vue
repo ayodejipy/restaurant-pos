@@ -7,18 +7,19 @@ const supabase = useSupabaseClient()
 const loading = ref<boolean>(false)
 const email = ref<string>('')
 
-// const handleLogin = async () => {
-//     try {
-//         loading.value = true
-//         const { error } = await supabase.auth.signInWithOtp({ email: email.value })
-//         if (error) throw error
-//         alert('Check your email for the login link!')
-//     } catch (error: any) {
-//         alert(error.error_description || error.message)
-//     } finally {
-//         loading.value = false
-//     }
-// }
+const handleLogin = async () => {
+    try {
+        loading.value = true
+        const { error } = await supabase.auth.signInWithOtp({ email: email.value })
+        if (error) throw error
+        alert('Check your email for the login link!')
+    } catch (error: any) {
+		alert(error.error_description || error.message)
+		return { error }
+    } finally {
+        loading.value = false
+    }
+}
 </script>
 
 <template>
@@ -35,12 +36,12 @@ const email = ref<string>('')
 						<sup class="leading-tight tracking-tight">Powered by Supabase</sup>
 					</p>
 				</div>
-				<form @submit.prevent="" class="w-full">
+				<form @submit.prevent="handleLogin" class="w-full">
 					<Field label="Enter your email">
-						<AtomInput type="email" placeholder="Your email" rounded="md" />
+						<AtomInput type="email" v-model="email" placeholder="Your email" rounded="md" />
 					</Field>
 
-					<AtomTheButton rounded="md" intent="default" class="w-full bg-blue-600 text-white font-medium mt-4">Login</AtomTheButton>
+					<AtomTheButton rounded="md" intent="default" :loading="loading" class="w-full bg-blue-600 text-white font-medium mt-4">Login</AtomTheButton>
 				</form>
 			</div>
         </div>
