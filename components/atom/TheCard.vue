@@ -16,7 +16,7 @@ const props = withDefaults(defineProps<Partial<IProps>>(), {
 })
 
 const cardClass = computed<string>(() => {
-	return cva("w-full", {
+	return cva("", {
 		variants: {
 			rounded: {
 				none: "rounded-none",

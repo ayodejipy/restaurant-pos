@@ -8,11 +8,11 @@ const menus = [
 </script>
 
 <template>
-    <header class="flex items-center justify-between md:py-5 md:px-4">
+    <header class="flex items-center justify-between md:p-6">
         <div class="font-bold text-md tracking-tight">Kopag</div>
 
         <div role="menu-items" class="flex items-center md:gap-4">
-            <AtomTheLink v-for="menu in menus" :key="menu.name" :url="menu.link" url="/" :left-icon="menu.icon" class="text-gray-500 font-normal hover:text-blue-600"> {{ menu.name }} </AtomTheLink>
+            <AtomTheLink v-for="menu in menus" :key="menu.name" :url="menu.link" :left-icon="menu.icon" class="text-gray-500 font-normal hover:text-blue-600"> {{ menu.name }} </AtomTheLink>
         </div>
 
         <div class="flex items-center gap-2">

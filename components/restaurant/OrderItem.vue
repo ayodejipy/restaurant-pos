@@ -1,0 +1,41 @@
+<script lang="ts" setup>
+interface IProps {
+    disabled: boolean;
+}
+
+const props = withDefaults(defineProps<Partial<IProps>>(), {
+    disabled: false,
+});
+
+const itemCount = ref<number>(0);
+
+const increaseItemCount = () => itemCount.value++;
+const decreaseItemCount = () => (itemCount.value ? itemCount.value : itemCount.value--);
+</script>
+
+<template>
+    <AtomTheCard rounded="none" shadow="none" class="py-4 max-w-full border-b border-gray-300">
+        <div class="w-full flex gap-4">
+            <div class="flex w-24 h-24 flex-shrink-0 rounded-xl overflow-clip">
+                <img src="https://img.freepik.com/free-photo/side-view-pilaf-with-stewed-beef-meat-plate_141793-5057.jpg?w=2000&t=st=1688158637~exp=1688159237~hmac=afd584a8c3d380ca23d781009f53de1ebf407d546eb9653734247334a3d55210" class="object-cover w-full h-full" alt="food picture" />
+            </div>
+            <div class="flex-1 flex flex-col justify-between">
+                <div>
+                    <h5 aria-label="meal name" class="font-medium text-lg text-gray-900 leading-tight">Crispy Dorey Sambal Matah</h5>
+                </div>
+                <div class="mt-6 flex items-center justify-between">
+                    <div class="flex gap-3">
+                        <AtomTheButton intent="default" class="bg-gray-200 text-gray-800 w-8 h-8 rounded-full" @click="decreaseItemCount" :disabled="itemCount == 0">
+                            <Icon name="ic:outline-minus" />
+                        </AtomTheButton>
+                        <span class="inline-flex justify-center items-center w-8 font-semibold text-gray-60">{{ itemCount }}</span>
+                        <AtomTheButton intent="default" class="bg-blue-600 text-white w-8 h-8 rounded-full" @click="increaseItemCount">
+                            <Icon name="ic:baseline-plus" />
+                        </AtomTheButton>
+                    </div>
+                    <p aria-label="meal price" class="text-gray-800 text-sm font-medium">$101.00</p>
+                </div>
+            </div>
+        </div>
+    </AtomTheCard>
+</template>
