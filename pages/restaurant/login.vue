@@ -12,7 +12,7 @@ const handleLogin = async () => {
 	const body = { email: email.value }
 	console.log('submitted')
 	const { data, error } = await $fetch<{ data: any, error: any }>('/api/login', { method: "POST", body })
-	if (data.user ) return console.log({ data})
+	if (data.user ) return $toast.success("Login successful. Please check your email for confirmation link.")
 	if (error) return $toast.error("Something went wrong...")
 }
 

@@ -18,7 +18,7 @@ const menus = [
         <div class="flex items-center gap-2">
             <div>
 				<AtomTheButton variant="default" intent="default" class="relative w-8 h-8 rounded-full border border-gray-300">
-					<Icon name="mingcute:notification-fill" size="2.5em" />
+					<Icon name="mingcute:notification-fill" size="1em" />
 					<span class="inline-block absolute top-2 right-2.5 w-1 h-1 rounded-full bg-orange-500"></span>
 				</AtomTheButton>
 			</div>

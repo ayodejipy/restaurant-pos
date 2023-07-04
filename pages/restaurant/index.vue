@@ -1,7 +1,12 @@
 <script lang="ts" setup>
+import { useUserStore } from '~/store/users'
+
 definePageMeta({
     layout: "restaurant",
 });
+
+const store = useUserStore()
+const { user } = storeToRefs(store)
 </script>
 
 <template>

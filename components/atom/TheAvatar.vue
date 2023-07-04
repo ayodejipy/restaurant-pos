@@ -53,7 +53,7 @@ watchEffect(() => {
 
 <template>
     <ClientOnly>
-        <span :title="props.name" :class="avatarClasses">
+        <span :title="props.name" :class="avatarClasses" v-bind="$attrs">
             <nuxt-img class="w-full h-full object-cover" v-if="validImageUrl" :src="validImageUrl" :alt="props.name" />
             <template v-else> {{ fallback }} </template>
         </span>
