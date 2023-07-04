@@ -1,25 +1,28 @@
 <script lang="ts" setup>
-import type { IUser } from "~/utils/types/User";
-
 const { $toast } = useNuxtApp()	
 
 const store = useUserStore()
 const { user, isAuthenticated } = storeToRefs(store)
 
-const formFields = computed<IUser>(() => user.value as IUser)
+const loading = ref<boolean>(false)
 
 async function updateProfile() {
 	try {
+		loading.value = true;
 		const body = {
 			id: user.value.id,
 			full_name: user.value.full_name,
 			username: user.value.username,
+			updated_at: new Date()
 		}
-		const data = await $fetch('/api/user/update', { method: 'POST', body })
-		console.log(data)
+		const { success } = await $fetch('/api/user/update', { method: 'POST', body })
+		if(success) $toast.success("Profile updated successfully.")
 	} catch (error: any) {
 		$toast.error("Unable to update profile. Please try again.")
+	} finally {
+		loading.value = false;
 	}
+	
 }
 </script>
 
@@ -58,7 +61,7 @@ async function updateProfile() {
 							<AtomInput type="text" placeholder="Username" v-model="user.username"  rounded="md" class="placeholder:text-gray-500" />
 						</Field>
 					</div>
-					<AtomTheButton type="submit" rounded="md" intent="default" class="bg-blue-600 hover:bg-blue-700 text-white font-medium mt-4">Update profile</AtomTheButton>
+					<AtomTheButton type="submit" rounded="md" intent="default" :loading="loading" class="bg-blue-600 hover:bg-blue-700 text-white font-medium mt-4">Update profile</AtomTheButton>
 				</form>
 			</div>
 		</div>

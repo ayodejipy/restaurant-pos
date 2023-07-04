@@ -7,3 +7,8 @@ export interface IUser {
 	updated_at: string;
 	created_at: string;
 }
+
+export interface IUserData {
+	data: IUser;
+	success: boolean
+}
