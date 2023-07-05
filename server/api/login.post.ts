@@ -6,7 +6,12 @@ export default defineEventHandler(async (event) => {
 	const client = serverSupabaseClient(event)
 
 	// use supabase server composable to sign user up..
-	const { data, error } = await client.auth.signInWithOtp({ email: body.email })
+	const { data, error } = await client.auth.signInWithOtp({
+		email: body.email,
+		options: {
+			emailRedirectTo: 'http://localhost:3000/restaurant/profile'
+		}
+	})
 	
     return {
         data,

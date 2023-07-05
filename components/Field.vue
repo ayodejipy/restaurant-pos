@@ -26,7 +26,7 @@ provide(
 </script>
 
 <template>
-    <AtomLabel :for="props.label" v-if="props.label">{{ props.label }}</AtomLabel>
+    <AtomLabel :for="props.id" v-if="props.label">{{ props.label }}</AtomLabel>
     <!-- make input options flexible by using slot in here -->
     <slot />
     <AtomHelperMessage v-if="!!props.help">{{ props.help }}</AtomHelperMessage>

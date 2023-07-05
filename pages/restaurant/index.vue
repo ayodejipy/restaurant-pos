@@ -1,12 +1,17 @@
 <script lang="ts" setup>
-import { useUserStore } from '~/store/users'
-
 definePageMeta({
     layout: "restaurant",
 });
 
 const store = useUserStore()
 const { user } = storeToRefs(store)
+
+async function getMenus() {
+    const { data } = await useFetch('/api/menus');
+    console.log(data.value);
+}
+
+// onMounted(() => getMenus())
 </script>
 
 <template>

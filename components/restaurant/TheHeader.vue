@@ -1,9 +1,9 @@
 <script lang="ts" setup>
 const menus = [
-    { name: "Dashboard", link: "/", icon: "bxs:dashboard" },
-    { name: "Order Lists", link: "/order-lists", icon: "ri:file-list-3-line" },
-    { name: "History", link: "/history", icon: "ic:outline-access-time" },
-    { name: "Bills", link: "/bills", icon: "fluent:receipt-28-regular" },
+    { name: "Dashboard", link: "/restaurant", icon: "bxs:dashboard" },
+    { name: "Order Lists", link: "/restaurant/order-lists", icon: "ri:file-list-3-line" },
+    { name: "History", link: "/restaurant/history", icon: "ic:outline-access-time" },
+    { name: "Bills", link: "/restaurant/bills", icon: "fluent:receipt-28-regular" },
 ];
 </script>
 
@@ -22,6 +22,9 @@ const menus = [
 					<span class="inline-block absolute top-2 right-2.5 w-1 h-1 rounded-full bg-orange-500"></span>
 				</AtomTheButton>
 			</div>
+            <RestaurantProfileMenu>
+                <AtomTheAvatar name="African man smiling" url="https://img.freepik.com/free-photo/close-up-portrait-dark-skinned-adult-man-with-thick-bristle-smiles-toothy-wears-big-optical-glasses-striped-jumper-glad-meet-friend_273609-38587.jpg?w=2000&t=st=1687988303~exp=1687988903~hmac=31692939773f6532f629fd91604bed4f7e9b36b0a4b552fa269be05548c766b0" />
+            </RestaurantProfileMenu>
 
             <AtomTheAvatar name="African man smiling" url="https://img.freepik.com/free-photo/close-up-portrait-dark-skinned-adult-man-with-thick-bristle-smiles-toothy-wears-big-optical-glasses-striped-jumper-glad-meet-friend_273609-38587.jpg?w=2000&t=st=1687988303~exp=1687988903~hmac=31692939773f6532f629fd91604bed4f7e9b36b0a4b552fa269be05548c766b0" />
         </div>

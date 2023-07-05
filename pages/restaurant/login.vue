@@ -37,6 +37,9 @@ const handleLogin = async () => {
 					<Field label="Enter your email">
 						<AtomInput type="email" v-model="email" placeholder="Your email" rounded="md" />
 					</Field>
+					<!-- <Field label="Password">
+						<AtomInput type="password" v-model="password" rounded="md" />
+					</Field> -->
 
 					<AtomTheButton type="submit" rounded="md" intent="default" :loading="loading" class="w-full bg-blue-600 text-white font-medium mt-4">Login</AtomTheButton>
 				</form>

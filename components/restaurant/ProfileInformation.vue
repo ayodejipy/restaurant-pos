@@ -33,8 +33,8 @@ async function updateProfile() {
 			<div class="flex gap-4 items-end md:mb-10" v-if="isAuthenticated">
 				<AtomTheAvatar class="border-2 border-white" size="lg" name="African man smiling" url="https://img.freepik.com/free-photo/close-up-portrait-dark-skinned-adult-man-with-thick-bristle-smiles-toothy-wears-big-optical-glasses-striped-jumper-glad-meet-friend_273609-38587.jpg?w=2000&t=st=1687988303~exp=1687988903~hmac=31692939773f6532f629fd91604bed4f7e9b36b0a4b552fa269be05548c766b0" />
 				<div aria-label="user information">
-					<h4 class="font-semibold text-xl mb-2">African Man</h4>
-					<p aria-label="" class="flex gap-2 font-semibold text-sm text-gray-800">Email: <span class="font-medium">{{  user?.email }}</span></p>
+					<h4 class="font-semibold text-xl mb-2">{{ user.full_name }}</h4>
+					<p aria-label="" class="flex gap-2 font-semibold text-sm text-gray-800">Email: <span class="font-medium">{{  user.email }}</span></p>
 					<p aria-label="" class="flex gap-2 font-semibold text-sm text-gray-800">Role: <span>Super admin <Icon name="carbon:badge" class="text-purple-700 font-bold ml-1" /></span></p>
 
 				</div>
