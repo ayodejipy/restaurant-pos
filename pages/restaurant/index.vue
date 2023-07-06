@@ -1,17 +1,44 @@
 <script lang="ts" setup>
+import type { IMenu, GroupedMenu } from '~/utils/types/Menu';
+
 definePageMeta({
     layout: "restaurant",
 });
 
-const store = useUserStore()
-const { user } = storeToRefs(store)
+const store = useUserStore();
+const { user } = storeToRefs(store);
 
-async function getMenus() {
-    const { data } = await useFetch('/api/menus');
-    console.log(data.value);
-}
+const { data, pending } = await useFetch("/api/menu");
 
-// onMounted(() => getMenus())
+console.log("menus: ", data.value);
+
+// const categorizeMenu = computed(() => {
+//     return data.value?.data.reduce((result: GroupedMenu, item: IMenu) => {
+//         // Check if the type exists as a key in the result object
+//         if (result[item.category]) {
+//             // If the key exists, push the item into the corresponding array
+//             result[item.category].push(item);
+//         } else {
+//             // If the key doesn't exist, create a new array with the item
+//             result[item.category] = [item];
+//         }
+//         return result;
+//     }, {});
+// })
+
+// const sortData = (data: IMenu[]) => {
+//    const sorted = data.reduce((result: MenusByCategory, item) => {
+//         // Check if the type exists as a key in the result object
+//         if (result[item.mealCategory]) {
+//             // If the key exists, push the item into the corresponding array
+//             result[item.mealCategory].push(item);
+//         } else {
+//             // If the key doesn't exist, create a new array with the item
+//             result[item.mealCategory] = [item];
+//         }
+//         return result;
+//     }, {});
+// };
 </script>
 
 <template>
@@ -24,9 +51,9 @@ async function getMenus() {
             <div class="flex gap-6 pb-4 overflow-x-auto no-scrollbar">
                 <RestaurantOrderCard v-for="n in 10" :key="n" />
             </div>
-            
+
             <div class="mt-4">
-                <RestaurantMenusTab />
+                <!-- <RestaurantMenusTab /> -->
             </div>
         </div>
 

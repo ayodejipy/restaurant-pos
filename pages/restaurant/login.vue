@@ -8,15 +8,14 @@ const loading = ref<boolean>(false)
 const email = ref<string>('')
 
 const handleLogin = async () => {
-	// loading.value = true
+	loading.value = true
 	const body = { email: email.value }
 	console.log('submitted')
 	const { data, error } = await $fetch<{ data: any, error: any }>('/api/login', { method: "POST", body })
 	if (data.user ) return $toast.success("Login successful. Please check your email for confirmation link.")
 	if (error) return $toast.error("Something went wrong...")
+	loading.value = false
 }
-
-// onMounted(() => console.log($toast.success('Testing toast') ))
 </script>
 
 <template>

@@ -1,11 +1,7 @@
 <script lang="ts" setup>
-interface IProps {
-    disabled: boolean;
-}
+import type { IMenu } from '~/utils/types/Menu';
 
-const props = withDefaults(defineProps<Partial<IProps>>(), {
-    disabled: false,
-});
+const props = defineProps<Partial<IMenu>>();
 
 const itemCount = ref<number>(0);
 

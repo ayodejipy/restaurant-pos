@@ -2,19 +2,22 @@
 import { serverSupabaseClient } from "#supabase/server";
 
 export default defineEventHandler(async (event) => {
-	const body = await readBody(event)
-	const client = serverSupabaseClient(event)
+    const body = await readBody(event);
+    const client = serverSupabaseClient(event);
 
-	// use supabase server composable to sign user up..
-	const { data, error } = await client.auth.signInWithOtp({
-		email: body.email,
-		options: {
-			emailRedirectTo: 'http://localhost:3000/restaurant/profile'
-		}
-	})
-	
+    // use supabase server composable to sign user up..
+    const { data, error } = await client.auth.signInWithOtp({
+        email: body.email,
+        options: {
+            emailRedirectTo: "http://localhost:3000/restaurant/profile",
+        },
+    });
+
+    console.log({ data });
+    console.log({ error });
+
     return {
         data,
-		error
+        error,
     };
 });

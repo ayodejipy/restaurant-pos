@@ -7,10 +7,14 @@ export const useMenuStore = defineStore('menus', () => {
         image_url: "",
         description: "",
         category: "",
-        price: "",
-		is_available: true,
+		price: "",
+		quantity: "",
+		sold: "",
+		available: "",
+		is_soldout: true,
 		updated_at: "",
-		created_at: ""
+		created_at: "",
+		user_id: "",
     });
 
     function updateForm(body: IMenu) {

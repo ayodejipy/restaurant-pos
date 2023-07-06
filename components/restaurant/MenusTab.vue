@@ -1,4 +1,10 @@
 <script lang="ts" setup>
+import { GroupedMenu } from '~/utils/types/Menu';
+
+const props = defineProps<{
+  categories: GroupedMenu
+}>()
+
 const categories = ref({
   Recent: [
     {
@@ -56,14 +62,14 @@ const categories = ref({
     <HeadlessTabGroup>
       <HeadlessTabList class="flex space-x-1 rounded-full bg-gray-200 p-1">
         <HeadlessTab
-          v-for="category in Object.keys(categories)"
+          v-for="category in Object.keys(props.categories)"
           as="template"
           :key="category"
           v-slot="{ selected }"
         >
           <button
-			aria-label="category button"
-		  	class="w-full rounded-full py-2.5 text-sm font-medium leading-5 ring-white ring-opacity-60 ring-offset-2 ring-offset-gray-400 focus:outline-none focus:ring-2"
+			      aria-label="category button"
+		  	    class="w-full rounded-full py-2.5 text-sm font-medium leading-5 ring-white ring-opacity-60 ring-offset-2 ring-offset-gray-400 focus:outline-none focus:ring-2"
             :class="[selected
                 ? 'bg-white text-gray-800 shadow'
                 : 'text-gray-400 hover:bg-white/[0.12] hover:text-white',
@@ -81,7 +87,7 @@ const categories = ref({
 		</div>
 
         <HeadlessTabPanel
-          v-for="(posts, idx) in Object.values(categories)"
+          v-for="(menus, idx) in Object.values(props.categories)"
           :key="idx"
           :class="[
             'rounded-xl bg-white',
@@ -89,7 +95,7 @@ const categories = ref({
           ]"
         >
 			<div class="flex md:gap-6">
-				<RestaurantMenuItem v-for="n in 3" :key="n" />
+				<RestaurantMenuItem v-for="menu in menus" :key="menu.id" :menu="menu" />
 			</div>
         </HeadlessTabPanel>
       </HeadlessTabPanels>

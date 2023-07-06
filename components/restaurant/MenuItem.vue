@@ -1,13 +1,12 @@
 <script lang="ts" setup>
-interface IProps {
-	disabled: boolean,
-}
+import type { IMenu } from '~/utils/types/Menu';
 
-const props = withDefaults(defineProps<Partial<IProps>>(), {
-	disabled: false
-});
+const props = defineProps<{
+    menu: IMenu
+}>();
 
-const backgroundColor = computed<string>(() => props.disabled ? 'bg-gray-100 shadow-gray-100' : 'bg-white');
+const isDisabled = computed<boolean>(() => props.menu.is_soldout);
+const backgroundColor = computed<string>(() => isDisabled.value ? 'bg-gray-100 shadow-gray-100' : 'bg-white');
 
 const itemCount = ref<number>(0);
 
@@ -30,13 +29,13 @@ const decreaseItemCount = () => itemCount.value ? itemCount.value : itemCount.va
             </div>
         </div>
         <div class="mt-6 flex justify-between">
-            <h5 aria-label="meal price" class="text-gray-800 text-2xl font-bold"><sup class="text-base font-semibold" :class="[props.disabled ? 'text-gray-400': 'text-blue-600' ]">$</sup>100.00</h5>
+            <h5 aria-label="meal price" class="text-gray-800 text-2xl font-bold"><sup class="text-base font-semibold" :class="[isDisabled ? 'text-gray-400': 'text-blue-600' ]">$</sup>100.00</h5>
             <div class="flex gap-3">
-                <AtomTheButton intent="default" :class="[props.disabled ? 'bg-gray-200 text-gray-300 cursor-not-allowed' : 'bg-gray-200 text-gray-800', 'w-10 h-10 rounded-full']" @click="decreaseItemCount" :disabled="itemCount == 0">
+                <AtomTheButton intent="default" :class="[isDisabled ? 'bg-gray-200 text-gray-300 cursor-not-allowed' : 'bg-gray-200 text-gray-800', 'w-10 h-10 rounded-full']" @click="decreaseItemCount" :disabled="itemCount == 0">
                     <Icon name="ic:outline-minus" />
                 </AtomTheButton>
-                <span :class="[props.disabled ? 'text-gray-400' : 'text-gray-600', 'inline-flex justify-center items-center w-14 font-semibold']">{{ itemCount }}</span>
-                <AtomTheButton intent="default" :class="[props.disabled ? 'bg-gray-200 text-gray-300 cursor-not-allowed pointer-events-none' : 'bg-blue-600 text-white', 'w-10 h-10 rounded-full']" @click="increaseItemCount">
+                <span :class="[isDisabled ? 'text-gray-400' : 'text-gray-600', 'inline-flex justify-center items-center w-14 font-semibold']">{{ itemCount }}</span>
+                <AtomTheButton intent="default" :class="[isDisabled ? 'bg-gray-200 text-gray-300 cursor-not-allowed pointer-events-none' : 'bg-blue-600 text-white', 'w-10 h-10 rounded-full']" @click="increaseItemCount">
                     <Icon name="ic:baseline-plus" />
                 </AtomTheButton>
             </div>

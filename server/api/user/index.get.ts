@@ -3,8 +3,7 @@ import { serverSupabaseUser, serverSupabaseClient } from "#supabase/server";
 
 export default defineEventHandler(async (event) => {
 	const client = serverSupabaseClient(event); // connect to supabase client
-	// get current user
-	const user = await serverSupabaseUser(event)
+	const user = await serverSupabaseUser(event) // get current user
 
 	const { data, status } = await client.from('profiles').select('*')
 	
