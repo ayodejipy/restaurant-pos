@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { group } from 'console';
 import type { IMenu, GroupedMenu } from '~/utils/types/Menu';
 
 definePageMeta({
@@ -9,36 +10,21 @@ const store = useUserStore();
 const { user } = storeToRefs(store);
 
 const { data, pending } = await useFetch("/api/menu");
+const menus = ref<IMenu[] | null | undefined>(data.value?.data.data);
 
 console.log("menus: ", data.value);
 
-// const categorizeMenu = computed(() => {
-//     return data.value?.data.reduce((result: GroupedMenu, item: IMenu) => {
-//         // Check if the type exists as a key in the result object
-//         if (result[item.category]) {
-//             // If the key exists, push the item into the corresponding array
-//             result[item.category].push(item);
-//         } else {
-//             // If the key doesn't exist, create a new array with the item
-//             result[item.category] = [item];
-//         }
-//         return result;
-//     }, {});
-// })
+// reducer function
+const reducer = (groups: GroupedMenu, item: IMenu) => { 
+    const category = item.category
+    // get group by its category, if it exists, return it otherwise return a group with an empty array
+    const group = groups[category] || (groups[category] = [])
+    group.push(item) // push item into the array
+    return groups
+}
 
-// const sortData = (data: IMenu[]) => {
-//    const sorted = data.reduce((result: MenusByCategory, item) => {
-//         // Check if the type exists as a key in the result object
-//         if (result[item.mealCategory]) {
-//             // If the key exists, push the item into the corresponding array
-//             result[item.mealCategory].push(item);
-//         } else {
-//             // If the key doesn't exist, create a new array with the item
-//             result[item.mealCategory] = [item];
-//         }
-//         return result;
-//     }, {});
-// };
+const categorizeMenu = computed(() => menus.value?.reduce(reducer, {}) as unknown as GroupedMenu)
+
 </script>
 
 <template>
@@ -53,7 +39,8 @@ console.log("menus: ", data.value);
             </div>
 
             <div class="mt-4">
-                <!-- <RestaurantMenusTab /> -->
+                {{  categorizeMenu  }}
+                <RestaurantMenusTab :categories="categorizeMenu" />
             </div>
         </div>
 

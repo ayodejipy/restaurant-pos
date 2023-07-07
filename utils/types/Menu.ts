@@ -14,10 +14,10 @@ export interface IMenu {
 	user_id: string;
 }
 
-export type Category = 'Appetizer' | 'Main' | 'Dessert' | 'Beverage'
+export type Category = 'appetizer' | 'main_course' | 'dessert' | 'beverage'
 
 export type GroupedMenu = {
-	[key in Category]: IMenu[];
+	[ key: string ]: IMenu[];
 }
 
 // export interface IUserData {
