@@ -17,7 +17,8 @@ export interface IMenu {
 export type Category = 'appetizer' | 'main_course' | 'dessert' | 'beverage'
 
 export type GroupedMenu = {
-	[ key: string ]: IMenu[];
+	// [key in Category]: IMenu[];
+	[key: string]: IMenu[];
 }
 
 // export interface IUserData {

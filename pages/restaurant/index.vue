@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { group } from 'console';
 import type { IMenu, GroupedMenu } from '~/utils/types/Menu';
 
 definePageMeta({
@@ -11,8 +10,6 @@ const { user } = storeToRefs(store);
 
 const { data, pending } = await useFetch("/api/menu");
 const menus = ref<IMenu[] | null | undefined>(data.value?.data.data);
-
-console.log("menus: ", data.value);
 
 // reducer function
 const reducer = (groups: GroupedMenu, item: IMenu) => { 
@@ -39,8 +36,8 @@ const categorizeMenu = computed(() => menus.value?.reduce(reducer, {}) as unknow
             </div>
 
             <div class="mt-4">
-                {{  categorizeMenu  }}
-                <RestaurantMenusTab :categories="categorizeMenu" />
+                <RestaurantMenusTab v-if="menus?.length" :categories="categorizeMenu" />
+                <div v-else> Not available...</div>
             </div>
         </div>
 
