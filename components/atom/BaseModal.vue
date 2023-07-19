@@ -13,6 +13,10 @@ const props = withDefaults(defineProps<IModalProps>(), {
     rounded: "lg",
 });
 
+// modal store
+const modalStore = useModalStore();
+const { modalType } = storeToRefs(modalStore);
+
 const emit = defineEmits(["close"]);
 
 const containerClass = computed(() => {
@@ -33,20 +37,22 @@ const containerClass = computed(() => {
         },
     })({ size: props.size, rounded: props.rounded });
 });
+
+const close = () => modalType.value = null
 </script>
 
 <template>
     <HeadlessTransitionRoot appear :show="props.isOpen" as="template">
-        <HeadlessDialog as="div" @close="emit('close')" class="relative z-10">
+        <HeadlessDialog as="div" @close="close" class="relative z-10">
             <HeadlessTransitionChild as="template" enter="duration-300 ease-out" enter-from="opacity-0" enter-to="opacity-100" leave="duration-200 ease-in" leave-from="opacity-100" leave-to="opacity-0">
                 <div class="fixed inset-0 bg-black bg-opacity-25" />
             </HeadlessTransitionChild>
 
             <div class="fixed inset-0 overflow-y-auto">
-                <div class="flex min-h-full items-center justify-center p-4 text-center">
+                <div class="relative flex min-h-full items-center justify-center p-4 text-center">
                     <HeadlessTransitionChild as="template" enter="duration-300 ease-out" enter-from="opacity-0 scale-95" enter-to="opacity-100 scale-100" leave="duration-200 ease-in" leave-from="opacity-100 scale-100" leave-to="opacity-0 scale-95">
                         <HeadlessDialogPanel :class="[containerClass]">
-                            <HeadlessDialogTitle as="h3" class="text-lg font-medium leading-6 text-gray-900"> Payment successful </HeadlessDialogTitle>
+                            <!-- <HeadlessDialogTitle as="h3" class="text-lg font-medium leading-6 text-gray-900"> Payment successful </HeadlessDialogTitle> -->
                             <slot />
                         </HeadlessDialogPanel>
                     </HeadlessTransitionChild>

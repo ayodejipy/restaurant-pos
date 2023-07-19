@@ -8,6 +8,9 @@ definePageMeta({
 const store = useUserStore();
 const { user } = storeToRefs(store);
 
+const modalStore = useModalStore();
+const { modalType } = storeToRefs(modalStore);
+
 const { data, pending } = await useFetch("/api/menu");
 const menus = ref<IMenu[] | null | undefined>(data.value?.data.data);
 
@@ -65,4 +68,5 @@ const categorizeMenu = computed(() => menus.value?.reduce(reducer, {}) as unknow
             </div>
         </div>
     </section>
+    <RestaurantAddMenuModal :open="modalType == 'add-menu'" />
 </template>

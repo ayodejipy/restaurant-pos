@@ -21,6 +21,8 @@ export type GroupedMenu = {
 	[key: string]: IMenu[];
 }
 
+export type modalTypes = 'add-menu' | 'edit-menu' | 'details'
+
 // export interface IUserData {
 // 	data: IUser;
 // 	success: boolean
