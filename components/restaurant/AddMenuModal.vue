@@ -31,7 +31,7 @@ function submitForm() { }
 				<AtomInput v-model="form.image_url" type="text" placeholder="Enter meal image" />
 			</Field>
 			<Field label="Meal description">
-				<AtomInput v-model="form.image_url" type="text" placeholder="Enter short description about the meal" />
+				<AtomTextarea v-model="form.image_url" placeholder="Enter short description about the meal" />
 			</Field>
 			<!-- <Field label="Select category">
 				<AtomTheSelect v-model="form.category">
