@@ -62,7 +62,7 @@ function onClick(event: Event) {
     <button type="button" :class="[buttonClasses]" @click="onClick($event)">
         <Icon v-if="options.leftIcon && !isLoading" :name="options.leftIcon" size="1em" class="mr-2 fill-current" />
 
-        <span>
+        <span class="inline-flex">
             <slot v-if="!isLoading" />
         </span>
         

@@ -4,23 +4,23 @@ export const useMenuStore = defineStore('menus', () => {
 	const form = ref<Partial<IMenu>>({
         id: "",
         name: "",
-        image_url: "",
+        image: "",
         description: "",
         category: "",
 		price: "",
 		quantity: "",
 		sold: "",
 		available: "",
-		is_soldout: true,
+		is_soldout: false,
 		updated_at: "",
 		created_at: "",
 		user_id: "",
     });
+    const orderMenu = ref<IMenu[]>([])
 
     function updateForm(body: IMenu) {
         form.value = { ...body };
     }
-
     
 	return {
         form,

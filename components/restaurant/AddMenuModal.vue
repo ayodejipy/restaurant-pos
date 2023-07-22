@@ -1,7 +1,11 @@
 <script setup lang="ts">
+const { $toast } = useNuxtApp();
+
 defineProps<{
 	open: boolean
 }>();
+
+const isLoading = ref<boolean>(false)
 
 const menuStore = useMenuStore();
 const { form } = storeToRefs(menuStore);
@@ -10,7 +14,35 @@ const { form } = storeToRefs(menuStore);
 const modalStore = useModalStore();
 const { modalType } = storeToRefs(modalStore);
 
-function submitForm() { }
+const categories: {title: string, sub: string }[] = [
+    { title: "Appetizer", sub: "appetizer" },
+    { title: "Main course", sub: "main_course" },
+    { title: "dessert", sub: "dessert" },
+    { title: "Beverage", sub: "beverage" },
+    { title: "Other", sub: "other" },
+];
+
+async function submitForm() {
+	isLoading.value = true
+	const body = {
+		name: form.value.name,
+		image: form.value.image,
+		description: form.value.description,
+		category: form.value.category,
+		price: form.value.price,
+		quantity: form.value.quantity,
+		available: form.value.quantity
+	}
+	const { success } = await $fetch('/api/menu/add', { method: 'POST', body });
+	if(success) {
+		$toast.success('Menu added successfully...');
+		isLoading.value = false
+		// close modal
+		modalType.value = null
+	} else {
+		isLoading.value = false
+	}
+}
 
 </script>
 
@@ -28,31 +60,31 @@ function submitForm() { }
 				<AtomInput v-model="form.name" type="text" placeholder="Enter meal name" />
 			</Field>
 			<Field label="Meal image">
-				<AtomInput v-model="form.image_url" type="text" placeholder="Enter meal image" />
+				<AtomInput v-model="form.image" type="text" placeholder="Enter meal image" />
 			</Field>
 			<Field label="Meal description">
-				<AtomTextarea v-model="form.image_url" placeholder="Enter short description about the meal" />
+				<AtomTextarea v-model="form.description" placeholder="Enter short description about the meal" />
 			</Field>
-			<!-- <Field label="Select category">
-				<AtomTheSelect v-model="form.category">
+			<Field label="Select category">
+				<AtomTheSelect v-model="form.category" placeholder="Select category">
 					<option v-for="category in categories" :value="category.sub">{{ category.title }}</option>
 				</AtomTheSelect>
-			</Field> -->
+			</Field>
 			<div class="flex gap-4">
 				<div class="w-full">
 					<Field label="Price">
-						<AtomInput v-model="form.image_url" type="text" placeholder="Enter meal price" />
+						<AtomInput v-model="form.price" type="text" placeholder="Enter meal price" />
 					</Field>
 				</div>
 				<div class="w-full">
 					<Field label="Quantity">
-						<AtomInput v-model="form.image_url" type="text" placeholder="Enter quantity" />
+						<AtomInput v-model="form.quantity" type="text" placeholder="Enter quantity" />
 					</Field>
 				</div>
 			</div>
 
 			<div class="mt-6">
-                <AtomTheButton type="submit" rounded="lg" intent="default" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium">Submit</AtomTheButton>
+                <AtomTheButton type="submit" rounded="lg" intent="default" :loading="isLoading" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium">Submit</AtomTheButton>
             </div>
 		</form>
 	</AtomBaseModal>

@@ -9,14 +9,14 @@ export default defineEventHandler(async (event) => {
 	// prepare object to be sent
 	const menuBody = {
 		...body,
-		profile_id: user.id
+		user_id: user.id
 	};
-
-	// create menu
-	const { data, status } = await client.from("menu").insert(menuBody);
+	// create new menu
+	const { status } = await client.from('menu').insert(menuBody);
+	// console.log(status, statusText);
+	// console.log({ data })
 
 	return {
-		data,
-		success: status === 200,
+		success: status === 201,
 	}
 });

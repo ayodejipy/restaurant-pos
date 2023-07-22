@@ -7,7 +7,7 @@ export interface IModalProps {
     rounded: "md" | "lg" | "xl" | "2xl";
 }
 
-const props = withDefaults(defineProps<IModalProps>(), {
+const props = withDefaults(defineProps<Partial<IModalProps>>(), {
     isOpen: false,
     size: "md",
     rounded: "lg",

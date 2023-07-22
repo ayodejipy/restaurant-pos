@@ -1,7 +1,7 @@
 export interface IMenu {
 	id: string | number;
 	name: string;
-	image_url: string;
+	image: string;
 	description: string;
 	category: string;
 	price: string;
