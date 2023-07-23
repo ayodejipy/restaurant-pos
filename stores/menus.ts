@@ -7,8 +7,8 @@ export const useMenuStore = defineStore('menus', () => {
         image: "",
         description: "",
         category: "",
-		price: "",
-		quantity: "",
+		price: 0,
+		quantity: 0,
 		sold: "",
 		available: "",
 		is_soldout: false,
@@ -16,13 +16,37 @@ export const useMenuStore = defineStore('menus', () => {
 		created_at: "",
 		user_id: "",
     });
-    const orderMenu = ref<IMenu[]>([])
+    const orderLists = ref<IMenu[]>([])
 
     function updateForm(body: IMenu) {
         form.value = { ...body };
     }
+
+    function addToCart(payload: IMenu) {
+        // check if story exists
+        const index = orderLists.value.findIndex((menu) => menu.id == payload.id);
+        // if found, do not include menu again
+        if (index >= 0) return;
+        
+        // add a new one to the end of the list
+        orderLists.value.push({ ...payload, quantity: 0 })
+	}
+    function increaseOrderQuantity(payload: IMenu) {
+        // check if story exists
+        const index = orderLists.value.findIndex((menu) => menu.id == payload.id);
+        orderLists.value[index].quantity++;
+	}
+    function decreaseOrderQuantity(payload: IMenu) {
+        // check if story exists
+        const index = orderLists.value.findIndex((menu) => menu.id == payload.id);
+        orderLists.value[index].quantity--;
+	}
     
 	return {
         form,
+        orderLists,
+        addToCart,
+        increaseOrderQuantity,
+        decreaseOrderQuantity
     };
 })

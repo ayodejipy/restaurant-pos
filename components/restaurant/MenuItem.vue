@@ -1,17 +1,15 @@
 <script lang="ts" setup>
-import type { IMenu } from '~/utils/types/Menu';
+import type { IMenu } from "~/utils/types/Menu";
 
 const props = defineProps<{
-    menu: IMenu
+    menu: IMenu;
 }>();
+const menuStore = useMenuStore()
+const { addToCart } = menuStore
 
 const isDisabled = computed<boolean>(() => props.menu.is_soldout);
-const backgroundColor = computed<string>(() => isDisabled.value ? 'bg-gray-100 shadow-gray-100' : 'bg-white');
+const backgroundColor = computed<string>(() => (isDisabled.value ? "bg-gray-100 shadow-gray-100" : "bg-white"));
 
-const itemCount = ref<number>(0);
-
-const increaseItemCount = () => itemCount.value++;
-const decreaseItemCount = () => itemCount.value ? itemCount.value : itemCount.value--;
 </script>
 
 <template>
@@ -29,16 +27,20 @@ const decreaseItemCount = () => itemCount.value ? itemCount.value : itemCount.va
             </div>
         </div>
         <div class="mt-6 flex justify-between">
-            <h5 aria-label="meal price" class="text-gray-800 text-2xl font-bold">
-                <sup class="text-base font-semibold" :class="[isDisabled ? 'text-gray-400': 'text-blue-600' ]">$</sup>{{ menu.price }}
-            </h5>
-            <div class="flex gap-3">
+            <h5 aria-label="meal price" class="text-gray-800 text-2xl font-bold"><sup class="text-base font-semibold" :class="[isDisabled ? 'text-gray-400' : 'text-blue-600']">$</sup>{{ menu.price }}</h5>
+            <!-- <div class="flex gap-3">
                 <AtomTheButton intent="default" :class="[isDisabled ? 'bg-gray-200 text-gray-300 cursor-not-allowed' : 'bg-gray-200 text-gray-800', 'w-10 h-10 rounded-full']" @click="decreaseItemCount" :disabled="itemCount == 0">
                     <Icon name="ic:outline-minus" class="inline-flex" />
                 </AtomTheButton>
                 <span :class="[isDisabled ? 'text-gray-400' : 'text-gray-600', 'inline-flex justify-center items-center w-14 font-semibold']">{{ itemCount }}</span>
                 <AtomTheButton intent="default" :class="[isDisabled ? 'bg-gray-200 text-gray-300 cursor-not-allowed pointer-events-none' : 'bg-blue-600 text-white', 'w-10 h-10 rounded-full']" @click="increaseItemCount">
                     <Icon name="ic:baseline-plus" class="inline-flex" />
+                </AtomTheButton>
+            </div> -->
+            <div class="relative flex justify-end gap-3 group w-44 h-12">
+                <AtomTheButton @click="addToCart(menu)" intent="default" class="relative border-2 !py-0 !items-stretch divide-x-2 divide-blue-700 rounded-full transform origin-right transition-all duration-150" :class="[isDisabled ? 'bg-gray-200 text-gray-300 cursor-not-allowed pointer-events-none' : 'border-blue-600 text-blue-700']">
+                    <span class="flex items-center px-4 text-blue-700">Add to list</span>
+                    <span class="flex items-center px-2 text-blue-700"><Icon name="ic:baseline-plus" /></span>
                 </AtomTheButton>
             </div>
         </div>

@@ -4,8 +4,8 @@ export interface IMenu {
 	image: string;
 	description: string;
 	category: string;
-	price: string;
-	quantity: string;
+	price: number;
+	quantity: number;
 	sold: string;
 	available: string;
 	is_soldout: boolean;
