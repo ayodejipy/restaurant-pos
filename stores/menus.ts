@@ -33,17 +33,17 @@ export const useMenuStore = defineStore('menus', () => {
         if (index >= 0) return;
         
         // add a new one to the end of the list
-        bookedOrder.value.menu_items.push({ ...payload, count: 0 })
+        bookedOrder.value.menu_items.push({ ...payload, buying: 0 })
 	}
     function increaseOrderQuantity(payload: IMenu) {
         // check if story exists
         const index = bookedOrder.value.menu_items.findIndex((menu) => menu.id == payload.id);
-        bookedOrder.value.menu_items[index].sold++;
+        bookedOrder.value.menu_items[index].buying++;
 	}
     function decreaseOrderQuantity(payload: IMenu) {
         // check if story exists
         const index = bookedOrder.value.menu_items.findIndex((menu) => menu.id == payload.id);
-        bookedOrder.value.menu_items[index].sold--;
+        bookedOrder.value.menu_items[index].buying--;
 	}
     
 	return {

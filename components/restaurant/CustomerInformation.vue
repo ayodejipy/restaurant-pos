@@ -6,16 +6,19 @@ const tables = [
 	{id: 4, name: "Table 4"},
 	{id: 5, name: "Table 5"},
 ]
+
+const menuStore = useMenuStore()
+const { bookedOrder } = storeToRefs(menuStore)
 </script>
 
 <template>
 	<section>
 		<div class="flex flex-col gap-3 pb-5 border-b border-gray-300">
 			<Field>
-				<AtomInput type="text" placeholder="Customer Name" class="placeholder:text-gray-500" />
+				<AtomInput type="text" v-model="bookedOrder.customer_name" placeholder="Customer Name" class="placeholder:text-gray-500" />
 			</Field>
 			<Field>
-				<AtomTheSelect placeholder="Select Table" class="rounded-sm">
+				<AtomTheSelect placeholder="Select Table" v-model="bookedOrder.table_number" class="rounded-sm">
 					<option v-for="table in tables" :value="table.id">{{ table.name }}</option>
 				</AtomTheSelect>
 			</Field>

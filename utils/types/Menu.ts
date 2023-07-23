@@ -12,6 +12,7 @@ export interface IMenu {
 	updated_at: string;
 	created_at: string;
 	user_id: string;
+	buying: number;
 }
 
 export interface Order {

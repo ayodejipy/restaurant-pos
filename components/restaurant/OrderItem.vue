@@ -10,6 +10,7 @@ const { increaseOrderQuantity, decreaseOrderQuantity } = menuStore
 
 const itemCount = ref<number>(0);
 
+
 </script>
 
 <template>
@@ -24,10 +25,10 @@ const itemCount = ref<number>(0);
                 </div>
                 <div class="mt-6 flex items-center justify-between">
                     <div class="flex gap-3">
-                        <AtomTheButton intent="default" class="bg-gray-200 text-gray-800 w-8 h-8 rounded-full" @click="decreaseOrderQuantity(item)" :disabled="itemCount == 0">
+                        <AtomTheButton intent="default" class="bg-gray-200 text-gray-800 w-8 h-8 rounded-full" @click="decreaseOrderQuantity(item)" :disabled="item.buying == 0">
                             <Icon name="ic:outline-minus" />
                         </AtomTheButton>
-                        <span class="inline-flex justify-center items-center w-8 font-semibold text-gray-60">{{ itemCount }}</span>
+                        <span class="inline-flex justify-center items-center w-8 font-semibold text-gray-60">{{ item.buying }}</span>
                         <AtomTheButton intent="default" class="bg-blue-600 text-white w-8 h-8 rounded-full" @click="increaseOrderQuantity(item)">
                             <Icon name="ic:baseline-plus" />
                         </AtomTheButton>
