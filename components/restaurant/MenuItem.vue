@@ -4,6 +4,7 @@ import type { IMenu } from "~/utils/types/Menu";
 const props = defineProps<{
     menu: IMenu;
 }>();
+const { formatted } = useCurrency();
 const menuStore = useMenuStore()
 const { addToCart } = menuStore
 
@@ -27,7 +28,7 @@ const backgroundColor = computed<string>(() => (isDisabled.value ? "bg-gray-100 
             </div>
         </div>
         <div class="mt-6 flex justify-between">
-            <h5 aria-label="meal price" class="text-gray-800 text-2xl font-bold"><sup class="text-base font-semibold" :class="[isDisabled ? 'text-gray-400' : 'text-blue-600']">$</sup>{{ menu.price }}</h5>
+            <h5 aria-label="meal price" class="text-gray-800 text-2xl font-bold"><sup class="text-base font-semibold" :class="[isDisabled ? 'text-gray-400' : 'text-blue-600']">$</sup>{{ formatted(menu.price) }}</h5>
             <!-- <div class="flex gap-3">
                 <AtomTheButton intent="default" :class="[isDisabled ? 'bg-gray-200 text-gray-300 cursor-not-allowed' : 'bg-gray-200 text-gray-800', 'w-10 h-10 rounded-full']" @click="decreaseItemCount" :disabled="itemCount == 0">
                     <Icon name="ic:outline-minus" class="inline-flex" />

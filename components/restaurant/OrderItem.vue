@@ -5,11 +5,10 @@ const props = defineProps<{
     item: IMenu
 }>();
 
+const { formatted } = useCurrency();
+
 const menuStore = useMenuStore()
 const { increaseOrderQuantity, decreaseOrderQuantity } = menuStore
-
-const itemCount = ref<number>(0);
-
 
 </script>
 
@@ -29,11 +28,11 @@ const itemCount = ref<number>(0);
                             <Icon name="ic:outline-minus" />
                         </AtomTheButton>
                         <span class="inline-flex justify-center items-center w-8 font-semibold text-gray-60">{{ item.buying }}</span>
-                        <AtomTheButton intent="default" class="bg-blue-600 text-white w-8 h-8 rounded-full" @click="increaseOrderQuantity(item)">
+                        <AtomTheButton intent="default" class="bg-blue-600 text-white w-8 h-8 rounded-full" @click="increaseOrderQuantity(item)" :disabled="item.buying == item.available">
                             <Icon name="ic:baseline-plus" />
                         </AtomTheButton>
                     </div>
-                    <p aria-label="meal price" class="text-gray-800 text-sm font-medium">${{ item.price }}</p>
+                    <p aria-label="meal price" class="text-gray-800 text-sm font-medium">{{ formatted(item.price) }}</p>
                 </div>
             </div>
         </div>

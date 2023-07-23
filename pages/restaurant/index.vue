@@ -59,9 +59,6 @@ const categorizeMenu = computed(() => menus.value?.reduce(reducer, {}) as unknow
                     <RestaurantOrderSummary />
                 </div>
             </div>
-            <div class="py-4 space-y-4">
-                <AtomTheButton rounded="lg" intent="default" class="w-full bg-blue-600 text-white font-medium">Process Transaction</AtomTheButton>
-            </div>
         </div>
     </section>
     <RestaurantAddMenuModal :open="modalType == 'add-menu'" />

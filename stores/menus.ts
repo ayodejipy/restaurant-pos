@@ -10,7 +10,7 @@ export const useMenuStore = defineStore('menus', () => {
 		price: 0,
 		quantity: 0,
 		sold: 0,
-		available: "",
+		available: 0,
 		is_soldout: false,
 		updated_at: "",
 		created_at: "",
