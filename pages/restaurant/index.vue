@@ -51,11 +51,7 @@ const categorizeMenu = computed(() => menus.value?.reduce(reducer, {}) as unknow
             </div>
             <div class="py-3">
                 <h5 class="font-medium text-lg leading-8">Order Details</h5>
-                <div>
-                    <RestaurantOrderItem />
-                    <RestaurantOrderItem />
-                    <RestaurantOrderItem />
-                </div>
+                <RestaurantOrderDetails />
             </div>
             <div class="py-4 space-y-4">
                 <h5 class="font-medium text-lg leading-8">Order Summary</h5>

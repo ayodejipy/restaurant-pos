@@ -6,12 +6,18 @@ export interface IMenu {
 	category: string;
 	price: number;
 	quantity: number;
-	sold: string;
+	sold: number;
 	available: string;
 	is_soldout: boolean;
 	updated_at: string;
 	created_at: string;
 	user_id: string;
+}
+
+export interface Order {
+	customer_name: string;
+	table_number: string;
+	menu_items: IMenu[]
 }
 
 export type Category = 'appetizer' | 'main_course' | 'dessert' | 'beverage'
