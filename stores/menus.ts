@@ -1,4 +1,4 @@
-import { IMenu, Order } from "~/utils/types/Menu";
+import { IMenu, IMenuKeys, Order, OrderItems } from "~/utils/types/Menu";
 
 export const useMenuStore = defineStore('menus', () => {
 	const form = ref<Partial<IMenu>>({
@@ -19,7 +19,8 @@ export const useMenuStore = defineStore('menus', () => {
     const bookedOrder = ref<Order>({
         customer_name: "",
         table_number: "",
-        menu_items: []
+        items: [],
+        status: "",
     })
 
     function updateForm(body: IMenu) {
@@ -27,23 +28,28 @@ export const useMenuStore = defineStore('menus', () => {
     }
 
     function addToCart(payload: IMenu) {
+        const cartKeys: IMenuKeys[] = ['name', 'id', 'price', 'image']
         // check if story exists
-        const index = bookedOrder.value.menu_items.findIndex((menu) => menu.id == payload.id);
+        const index = bookedOrder.value.items.findIndex((menu) => menu.id == payload.id);
         // if found, do not include menu again
         if (index >= 0) return;
-        
+        const item: OrderItems = {} as OrderItems
+        // let key: IMenuKeys
+        for (const key of cartKeys) {
+            item[key] = payload[key];
+        }
         // add a new one to the end of the list
-        bookedOrder.value.menu_items.push({ ...payload, buying: 0 })
+        bookedOrder.value.items.push(item as OrderItems)
 	}
-    function increaseOrderQuantity(payload: IMenu) {
+    function increaseOrderQuantity(payload: OrderItems) {
         // check if story exists
-        const index = bookedOrder.value.menu_items.findIndex((menu) => menu.id == payload.id);
-        bookedOrder.value.menu_items[index].buying++;
+        const index = bookedOrder.value.items.findIndex((menu) => menu.id == payload.id);
+        bookedOrder.value.items[index].quantity++;
 	}
-    function decreaseOrderQuantity(payload: IMenu) {
+    function decreaseOrderQuantity(payload: OrderItems) {
         // check if story exists
-        const index = bookedOrder.value.menu_items.findIndex((menu) => menu.id == payload.id);
-        bookedOrder.value.menu_items[index].buying--;
+        const index = bookedOrder.value.items.findIndex((menu) => menu.id == payload.id);
+        bookedOrder.value.items[index].quantity--;
 	}
     
 	return {

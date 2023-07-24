@@ -12,13 +12,23 @@ export interface IMenu {
     updated_at: string;
     created_at: string;
     user_id: string;
-    buying: number;
 }
 
+export type IMenuKeys = keyof IMenu;
+
+export interface OrderItems {
+	id: number;
+	name: string;
+	image: string;
+	price: number;
+	quantity: number
+	available: number
+}
 export interface Order {
     customer_name: string;
     table_number: string;
-    menu_items: IMenu[];
+	items: OrderItems[];
+	status: string;
 }
 
 export type Category = "appetizer" | "main_course" | "dessert" | "beverage";

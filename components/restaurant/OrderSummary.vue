@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { IMenu } from '~/utils/types/Menu';
+import { IMenu, OrderItems } from '~/utils/types/Menu';
 const tax = ref<number>(10)
 
 const { formatted } = useCurrency();
@@ -7,7 +7,7 @@ const { formatted } = useCurrency();
 const menuStore = useMenuStore();
 const { bookedOrder } = storeToRefs(menuStore);
 
-const subTotal = computed(() => bookedOrder.value.menu_items.reduce((acc: number, meal: IMenu) => acc+= meal.buying * meal.price, 0))
+const subTotal = computed(() => bookedOrder.value.items.reduce((acc: number, meal: OrderItems) => acc+= meal.quantity * meal.price, 0))
 const calculateTax = computed(() => (subTotal.value * tax.value) / 100 )
 
 </script>

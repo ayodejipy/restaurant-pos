@@ -5,8 +5,8 @@ definePageMeta({
     layout: "restaurant",
 });
 
-const store = useUserStore();
-const { user } = storeToRefs(store);
+// const store = useUserStore();
+// const { user } = storeToRefs(store);
 
 const modalStore = useModalStore();
 const { modalType } = storeToRefs(modalStore);

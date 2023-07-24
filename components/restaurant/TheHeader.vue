@@ -14,7 +14,7 @@ const menus = [
 
 <template>
     <header class="flex items-center justify-between md:p-6">
-        <div class="font-bold text-md tracking-tight">Kopag</div>
+        <div class="font-bold text-md tracking-tight">TheMenu</div>
 
         <div role="menu-items" class="flex items-center md:gap-4">
             <AtomTheLink v-for="menu in menus" :key="menu.name" :url="menu.link" :left-icon="menu.icon" class="text-gray-500 font-normal hover:text-blue-600"> {{ menu.name }} </AtomTheLink>
@@ -22,7 +22,7 @@ const menus = [
 
         <div class="flex items-center gap-2">
             <AtomTheButton @click="modalType = 'add-menu'" variant="default" intent="default" class="relative font-medium text-sm underline underline-offset-8 hover:text-gray-800 lg:mr-3">
-                Add menus
+                Add new meal
             </AtomTheButton>
             <div>
 				<AtomTheButton variant="default" intent="default" class="relative w-8 h-8 rounded-full border border-gray-300">

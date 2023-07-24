@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-import type { IMenu } from '~/utils/types/Menu';
+import type { IMenu, OrderItems } from '~/utils/types/Menu';
 
 const props = defineProps<{
-    item: IMenu
+    item: OrderItems
 }>();
 
 const { formatted } = useCurrency();
@@ -24,11 +24,11 @@ const { increaseOrderQuantity, decreaseOrderQuantity } = menuStore
                 </div>
                 <div class="mt-6 flex items-center justify-between">
                     <div class="flex gap-3">
-                        <AtomTheButton intent="default" class="bg-gray-200 text-gray-800 w-8 h-8 rounded-full" @click="decreaseOrderQuantity(item)" :disabled="item.buying == 0">
+                        <AtomTheButton intent="default" class="bg-gray-200 text-gray-800 w-8 h-8 rounded-full" @click="decreaseOrderQuantity(item)" :disabled="item.quantity == 0">
                             <Icon name="ic:outline-minus" />
                         </AtomTheButton>
-                        <span class="inline-flex justify-center items-center w-8 font-semibold text-gray-60">{{ item.buying }}</span>
-                        <AtomTheButton intent="default" class="bg-blue-600 text-white w-8 h-8 rounded-full" @click="increaseOrderQuantity(item)" :disabled="item.buying == item.available">
+                        <span class="inline-flex justify-center items-center w-8 font-semibold text-gray-60">{{ item.quantity }}</span>
+                        <AtomTheButton intent="default" class="bg-blue-600 text-white w-8 h-8 rounded-full" @click="increaseOrderQuantity(item)" :disabled="item.quantity == item.available">
                             <Icon name="ic:baseline-plus" />
                         </AtomTheButton>
                     </div>
