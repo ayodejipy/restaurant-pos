@@ -13,7 +13,7 @@ export default defineEventHandler(async (event) => {
 	};
 	// create new menu
 	const data = await client.from('orders').insert(body);
-	console.log({ data })
+	// console.log({ data })
 
 	return {
 		success: data.status === 201,

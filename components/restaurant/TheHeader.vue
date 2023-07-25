@@ -21,7 +21,7 @@ const menus = [
         </div>
 
         <div class="flex items-center gap-2">
-            <AtomTheButton @click="modalType = 'add-menu'" variant="default" intent="default" class="relative font-medium text-sm border border-gray-300 hover:text-gray-800 lg:mr-3">
+            <AtomTheButton @click="modalType = 'add-menu'" variant="default" intent="default" class="relative px-3 font-medium text-sm text-gray-500 border border-gray-300 rounded-lg hover:text-gray-800 lg:mr-3">
                 <Icon name="ic:outline-add" size="1em" class="mr-2" />
                 Add new meal
             </AtomTheButton>

@@ -1,5 +1,11 @@
 import { IMenu, OrderItemsKey, Order, OrderItems } from "~/utils/types/Menu";
 
+const DEFAULT_BOOKED = {
+    customer_name: "",
+    table_number: "",
+    items: [],
+    status: "",
+}
 export const useMenuStore = defineStore('menus', () => {
 	const form = ref<Partial<IMenu>>({
         id: "",
@@ -16,15 +22,14 @@ export const useMenuStore = defineStore('menus', () => {
 		created_at: "",
 		user_id: "",
     });
-    const bookedOrder = ref<Order>({
-        customer_name: "",
-        table_number: "",
-        items: [],
-        status: "",
-    })
+    const bookedOrder = ref<Order>(DEFAULT_BOOKED)
 
     function updateForm(body: IMenu) {
         form.value = { ...body };
+    }
+
+    function clearBooked() {
+        bookedOrder.value = DEFAULT_BOOKED
     }
 
     function addToCart(payload: IMenu) {
@@ -33,8 +38,7 @@ export const useMenuStore = defineStore('menus', () => {
         const index = bookedOrder.value.items.findIndex((menu) => menu.id == payload.id);
         // if found, do not include menu again
         if (index >= 0) return;
-        const item: OrderItems = {} as OrderItems
-        // let key: IMenuKeys
+        const item: OrderItems = {} as  unknown as OrderItems
         for (const key of cartKeys) {
             item[key] = payload[key];
         }
@@ -64,6 +68,7 @@ export const useMenuStore = defineStore('menus', () => {
         form,
         bookedOrder,
         addToCart,
+        clearBooked,
         increaseOrderQuantity,
         decreaseOrderQuantity
     };
