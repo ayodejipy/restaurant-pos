@@ -38,6 +38,8 @@ export const useMenuStore = defineStore('menus', () => {
         for (const key of cartKeys) {
             item[key] = payload[key];
         }
+        // set quantity to zero
+        item.quantity = 0
         // add a new one to the end of the list
         bookedOrder.value.items.push(item as OrderItems)
 	}
@@ -49,7 +51,13 @@ export const useMenuStore = defineStore('menus', () => {
     function decreaseOrderQuantity(payload: OrderItems) {
         // check if story exists
         const index = bookedOrder.value.items.findIndex((menu) => menu.id == payload.id);
-        bookedOrder.value.items[index].quantity--;
+        if (payload.quantity > 1) {
+            // reduce the quantity
+            bookedOrder.value.items[index].quantity--;
+        } else {
+            // remove the item from bookedOrder
+            bookedOrder.value.items.splice(index, 1);
+        }
 	}
     
 	return {

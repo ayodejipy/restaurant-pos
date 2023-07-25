@@ -71,7 +71,7 @@ describe("describe useMenuStore", () => {
         expect(store.bookedOrder).toEqual(DEFAULT_ORDER);
     });
 
-    it("should prestored menu in form", () => {
+    it("should prestore menu in form", () => {
         store.form = DEFAULT_MENU_DATA;
         expect(store.form.id).toEqual(DEFAULT_MENU_DATA.id);
         expect(store.form.name).toEqual(DEFAULT_MENU_DATA.name);
@@ -84,20 +84,44 @@ describe("describe useMenuStore", () => {
     })
 
     it("should add item to booked order", () => {
+        store.bookedOrder.customer_name = "Harry Maguire"
+        store.bookedOrder.table_number = "Table 5"
         store.addToCart(DEFAULT_MENU_DATA);
-        expect(store.bookedOrder.customer_name).toEqual(DEFAULT_ORDER_DATA.customer_name);
-        expect(store.bookedOrder.table_number).toEqual(DEFAULT_ORDER_DATA.table_number);
-        expect(store.bookedOrder.items[0]).toHaveLength(DEFAULT_ORDER_DATA.items.length)
-        expect(store.bookedOrder.items[0]).toHaveLength(DEFAULT_ORDER_DATA.items.length)
-        expect(store.bookedOrder.status).toEqual(DEFAULT_ORDER_DATA.status);
-    })
-    it("should increase the quantity", () => {
-        store.increaseOrderQuantity(DEFAULT_ORDER_DATA.items[0]);
-        expect(store.increaseOrderQuantity).toHaveBeenCalledOnce()
-        expect(DEFAULT_ORDER_DATA.items[0]).toEqual(DEFAULT_ORDER_DATA.items[0].quantity++)
+        const order = store.bookedOrder
+        expect(store.bookedOrder.customer_name).toEqual(order.customer_name);
+        expect(store.bookedOrder.table_number).toEqual(order.table_number);
+        expect(store.bookedOrder.items[0].id).toEqual(DEFAULT_MENU_DATA.id)
+        expect(store.bookedOrder.status).toEqual(order.status);
     })
 
-    // afterEach(() => {
-    //     $resetPiniaStores()
-    // });
+    it("should increase item's quantity", () => {
+        const spy = vi.spyOn(store, 'increaseOrderQuantity');
+        store.addToCart(DEFAULT_MENU_DATA);
+        const items = store.bookedOrder.items;
+        store.increaseOrderQuantity(items[0]);
+        expect(spy).toHaveBeenCalled()
+        expect(store.bookedOrder.items[0].quantity).toEqual(items[0].quantity++)
+    })
+
+    it("should decrease item's quantity", () => {
+        const spy = vi.spyOn(store, 'decreaseOrderQuantity');
+        store.addToCart(DEFAULT_MENU_DATA);
+        const items = store.bookedOrder.items;
+        store.decreaseOrderQuantity({ ...items[0], quantity: 2});
+        expect(spy).toHaveBeenCalled()
+        expect(store.bookedOrder.items[0].quantity).toEqual(items[0].quantity--)
+    })
+
+    it("should remove if item's quantity is zero", () => {
+        const spy = vi.spyOn(store, 'decreaseOrderQuantity');
+        store.addToCart(DEFAULT_MENU_DATA);
+        const items = store.bookedOrder.items;
+        store.decreaseOrderQuantity(items[0]);
+        expect(spy).toHaveBeenCalled()
+        expect(store.bookedOrder.items).toHaveLength(0)
+    })
+
+    afterEach(() => {
+        $resetPiniaStores()
+    });
 });
