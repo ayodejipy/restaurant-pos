@@ -12,11 +12,10 @@ export default defineEventHandler(async (event) => {
 		status: 'processing',
 	};
 	// create new menu
-	const { status } = await client.from('orders').insert(body);
-	// console.log(status, statusText);
-	// console.log({ data })
+	const data = await client.from('orders').insert(body);
+	console.log({ data })
 
 	return {
-		success: status === 201,
+		success: data.status === 201,
 	}
 });

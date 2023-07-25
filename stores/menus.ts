@@ -1,4 +1,4 @@
-import { IMenu, IMenuKeys, Order, OrderItems } from "~/utils/types/Menu";
+import { IMenu, OrderItemsKey, Order, OrderItems } from "~/utils/types/Menu";
 
 export const useMenuStore = defineStore('menus', () => {
 	const form = ref<Partial<IMenu>>({
@@ -28,7 +28,7 @@ export const useMenuStore = defineStore('menus', () => {
     }
 
     function addToCart(payload: IMenu) {
-        const cartKeys: IMenuKeys[] = ['name', 'id', 'price', 'image', 'quantity', 'available']
+        const cartKeys: OrderItemsKey[] = ['name', 'id', 'price', 'image', 'quantity', 'available']
         // check if story exists
         const index = bookedOrder.value.items.findIndex((menu) => menu.id == payload.id);
         // if found, do not include menu again

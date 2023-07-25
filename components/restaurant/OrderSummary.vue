@@ -3,12 +3,29 @@ import { IMenu, OrderItems } from '~/utils/types/Menu';
 const tax = ref<number>(10)
 
 const { formatted } = useCurrency();
+const { $toast } = useNuxtApp()
 
 const menuStore = useMenuStore();
 const { bookedOrder } = storeToRefs(menuStore);
 
+const isLoading = ref<boolean>(false)
+
 const subTotal = computed(() => bookedOrder.value.items.reduce((acc: number, meal: OrderItems) => acc+= meal.quantity * meal.price, 0))
-const calculateTax = computed(() => (subTotal.value * tax.value) / 100 )
+const calculateTax = computed(() => (subTotal.value * tax.value) / 100)
+
+async function processOrder() {
+	try {
+		isLoading.value = true
+		const { success } = await $fetch('/api/order/add', { method: 'POST', body: bookedOrder.value });
+		if (success) {
+			$toast.success('Hurray! Order is been processed...');
+		}
+	} catch (error) {
+		$toast.error('Unable to process order, please try again soon.');
+	} finally {
+		isLoading.value = false
+	}
+}
 
 </script>
 
@@ -22,7 +39,7 @@ const calculateTax = computed(() => (subTotal.value * tax.value) / 100 )
 			<div class="line"></div>
 		</AtomTheCard>
 		<div class="py-4 space-y-4">
-			<AtomTheButton rounded="lg" intent="default" class="w-full bg-blue-600 text-white font-medium">Process Transaction</AtomTheButton>
+			<AtomTheButton @click="processOrder" :loading="isLoading" rounded="lg" intent="default" class="w-full bg-blue-600 text-white font-medium">Process Transaction</AtomTheButton>
 		</div>
 	</div>
 </template>

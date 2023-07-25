@@ -24,6 +24,8 @@ export interface OrderItems {
 	quantity: number
 	available: number
 }
+
+export type OrderItemsKey = keyof OrderItems;
 export interface Order {
     customer_name: string;
     table_number: string;
