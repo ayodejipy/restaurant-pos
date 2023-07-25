@@ -23,23 +23,26 @@ const categories: {title: string, sub: string }[] = [
 ];
 
 async function submitForm() {
-	isLoading.value = true
-	const body = {
-		name: form.value.name,
-		image: form.value.image,
-		description: form.value.description,
-		category: form.value.category,
-		price: form.value.price,
-		quantity: form.value.quantity,
-		available: form.value.quantity
-	}
-	const { success } = await $fetch('/api/menu/add', { method: 'POST', body });
-	if(success) {
-		$toast.success('Menu added successfully...');
-		isLoading.value = false
-		// close modal
-		modalType.value = null
-	} else {
+	try {
+		isLoading.value = true
+		const body = {
+			name: form.value.name,
+			image: form.value.image,
+			description: form.value.description,
+			category: form.value.category,
+			price: form.value.price,
+			quantity: form.value.quantity,
+			available: form.value.quantity
+		}
+		const { success } = await $fetch('/api/menu/add', { method: 'POST', body });
+		if (success) {
+			$toast.success('Menu added successfully...');
+			// close modal
+			modalType.value = null
+		}
+	} catch (error) {
+		$toast.error("Oh no! We are unable to create your meal at this time.")
+	} finally {
 		isLoading.value = false
 	}
 }
