@@ -28,7 +28,7 @@ export const useMenuStore = defineStore('menus', () => {
     }
 
     function addToCart(payload: IMenu) {
-        const cartKeys: IMenuKeys[] = ['name', 'id', 'price', 'image']
+        const cartKeys: IMenuKeys[] = ['name', 'id', 'price', 'image', 'quantity', 'available']
         // check if story exists
         const index = bookedOrder.value.items.findIndex((menu) => menu.id == payload.id);
         // if found, do not include menu again

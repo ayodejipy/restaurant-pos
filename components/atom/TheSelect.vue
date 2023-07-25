@@ -26,7 +26,7 @@ const field = inject("field", props);
 const showPlaceholder = computed<string>(() => !!field.placeholder ? field.placeholder : props.placeholder);
 
 const Classes = computed(() => {
-    return cva("relative w-full px-4 border appearance-none text-gray-400 text-xs h-12", {
+    return cva("relative w-full px-4 border appearance-none text-gray-800 text-xs h-12 font-normal placeholder:focus:text-transparent placeholder:text-gray-400 bg-transparent focus:border-gray-500", {
         variants: {
             rounded: {
                 md: "rounded-md",

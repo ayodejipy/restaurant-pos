@@ -23,7 +23,7 @@ const props = withDefaults(defineProps<Partial<InputProps>>(), {
 const field = inject("field", props);
 
 const Classes = computed(() => {
-    return cva("relative w-full p-3 text-gray-800 border  outline-0 text-xs leading-normal font-normal placeholder:focus:text-transparent placeholder:text-gray-400 bg-transparent focus:border-gray-500", {
+    return cva("relative w-full p-3 text-gray-800 border outline-0 text-xs leading-normal font-normal placeholder:focus:text-transparent placeholder:text-gray-400 bg-transparent focus:border-gray-500", {
         variants: {
             rounded: {
                 md: "rounded-md",

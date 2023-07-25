@@ -87,7 +87,8 @@ describe("describe useMenuStore", () => {
         store.addToCart(DEFAULT_MENU_DATA);
         expect(store.bookedOrder.customer_name).toEqual(DEFAULT_ORDER_DATA.customer_name);
         expect(store.bookedOrder.table_number).toEqual(DEFAULT_ORDER_DATA.table_number);
-        expect(store.bookedOrder.items).toHaveLength(DEFAULT_ORDER_DATA.items.length)
+        expect(store.bookedOrder.items[0]).toHaveLength(DEFAULT_ORDER_DATA.items.length)
+        expect(store.bookedOrder.items[0]).toHaveLength(DEFAULT_ORDER_DATA.items.length)
         expect(store.bookedOrder.status).toEqual(DEFAULT_ORDER_DATA.status);
     })
     it("should increase the quantity", () => {
