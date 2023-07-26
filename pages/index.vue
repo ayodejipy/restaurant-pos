@@ -28,8 +28,8 @@ const categorizeMenu = computed(() => menus.value?.reduce(reducer, {}) as unknow
 </script>
 
 <template>
-    <section class="min-h-screen flex divide-x divide-gray-300 border-t border-gray-300">
-        <div class="flex-1 bg-gray-50 p-6 overflow-hidden">
+    <section class="min-h-screen flex items-start border-t border-gray-300">
+        <div class="flex-1 bg-gray-50 p-6 overflow-hidden border-r border-gray-300">
             <RestaurantOrderLists />
 
             <div class="mt-4">
@@ -38,22 +38,10 @@ const categorizeMenu = computed(() => menus.value?.reduce(reducer, {}) as unknow
             </div>
         </div>
 
-        <div class="w-1/4 flex-shrink-0 p-6">
-            <div>
-                <h5 class="font-medium text-lg leading-8 md:my-3">Customer Information</h5>
-                <RestaurantCustomerInformation />
-            </div>
-            <div class="py-3">
-                <h5 class="font-medium text-lg leading-8">Order Details</h5>
-                <RestaurantOrderDetails />
-            </div>
-            <div class="py-4 space-y-4">
-                <h5 class="font-medium text-lg leading-8">Order Summary</h5>
-                <div>
-                    <RestaurantOrderSummary />
-                </div>
-            </div>
+        <div class="w-1/4 flex-shrink-0 p-6 sticky top-0">
+            <RestaurantOrderDetails />
         </div>
     </section>
     <RestaurantAddMenuModal :open="modalType == 'add-menu'" />
 </template>
+

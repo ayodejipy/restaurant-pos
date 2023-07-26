@@ -31,7 +31,7 @@ const form = reactive({
     category: "",
 });
 
-const { rules } = useValidator(form);
+const { rules } = useValidator();
 const $v = useVuelidate(rules, form);
 
 // computed

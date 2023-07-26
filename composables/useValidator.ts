@@ -1,4 +1,5 @@
 import { required, email, sameAs, minLength, helpers } from '@vuelidate/validators';
+import type { Order } from '~/utils/types/Menu';
 
 export interface IForm {
 	name: string,
@@ -7,7 +8,7 @@ export interface IForm {
 	confirmPassword: string;
 	category: string;
 }
-export default function (formData: IForm) {
+export default function (form?: IForm) {
 	const rules = computed(() => ({
 		name: {
 			required: helpers.withMessage("Name field is required.", required),
@@ -23,14 +24,25 @@ export default function (formData: IForm) {
 		},
 		confirmPassword: { 
 			required: helpers.withMessage("Password confirmation field is required.", required),
-			sameAs: helpers.withMessage("Passwords does not match.", sameAs(formData.password))
+			sameAs: helpers.withMessage("Passwords does not match.", sameAs(form?.password))
 		},
 		category: { 
 			required: helpers.withMessage("Category field is required.", required),
 		},
 	}));
 
+	const orderRules = computed(() => ({
+		customer_name: {
+			required: helpers.withMessage("Customer name is required.", required),
+			minLength: minLength(4)
+		},
+		table_number: {
+			required: helpers.withMessage("Table field is required.", required),
+		},
+	}));
+
 	return {
-		rules
+		rules,
+		orderRules
 	}
 }
