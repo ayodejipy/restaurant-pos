@@ -1,14 +1,17 @@
-import { IMenu, OrderItemsKey, Order, OrderItems } from "~/utils/types/Menu";
+import { IMenu, OrderItemsKey, Order, OrderItems, IMenuKeys } from "~/utils/types/Menu";
 
 const DEFAULT_BOOKED = {
     customer_name: "",
     table_number: "",
     items: [],
     status: "",
+    subtotal: 0,
+    tax: 0
+
 }
 export const useMenuStore = defineStore('menus', () => {
 	const form = ref<Partial<IMenu>>({
-        id: "",
+        id: 0,
         name: "",
         image: "",
         description: "",
@@ -32,18 +35,29 @@ export const useMenuStore = defineStore('menus', () => {
         bookedOrder.value = DEFAULT_BOOKED
     }
 
+    function clearForm() {
+        const numberKeys = ["price", "quantity", "sold", "available"]; // Keys to be excluded from clearing
+
+        // Loop through each key in the form object
+        let key: IMenuKeys
+        for (const key in form.value) {
+            // Set number/string for appropriate keys
+            // @ts-ignore
+            form.value[key] = numberKeys.includes(key) ? 0 : "";
+        }
+		form.value.is_soldout = false; // Set isAvailable to false
+    }
+
     function addToCart(payload: IMenu) {
-        const cartKeys: OrderItemsKey[] = ['name', 'id', 'price', 'image', 'quantity', 'available']
+        // const cartKeys: OrderItemsKey[] = ['name', 'id', 'price', 'image', 'quantity', 'available']
         // check if story exists
         const index = bookedOrder.value.items.findIndex((menu) => menu.id == payload.id);
         // if found, do not include menu again
         if (index >= 0) return;
-        const item: OrderItems = {} as  unknown as OrderItems
-        for (const key of cartKeys) {
-            item[key] = payload[key];
-        }
-        // set quantity to zero
-        item.quantity = 0
+        const { is_soldout, updated_at, created_at, user_id, description, sold, category, ...rest } = payload;
+        const item: OrderItems = rest
+        // set quantity to one by default
+        item.quantity = 1
         // add a new one to the end of the list
         bookedOrder.value.items.push(item as OrderItems)
 	}
@@ -69,6 +83,7 @@ export const useMenuStore = defineStore('menus', () => {
         bookedOrder,
         addToCart,
         clearBooked,
+        clearForm,
         increaseOrderQuantity,
         decreaseOrderQuantity
     };

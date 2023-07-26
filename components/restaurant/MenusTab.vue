@@ -34,10 +34,10 @@ const getCatergory = (category: string) => Categories[category.toUpperCase()]
       </HeadlessTabList>
 
       <HeadlessTabPanels class="mt-2">
-		<div class="flex items-center justify-between md:my-3">
-			<h5 class="font-medium text-base leading-8">Menu</h5>
-			<a href="#" class="text-sm text-gray-400">Showing 30 Items</a>
-		</div>
+        <div class="flex items-center justify-between md:my-3">
+          <h5 class="font-medium text-base leading-8">Menu</h5>
+          <a href="#" class="text-sm text-gray-400">Showing 30 Items</a>
+        </div>
 
         <HeadlessTabPanel
           v-for="(menus, idx) in Object.values(props.categories)"
@@ -47,9 +47,9 @@ const getCatergory = (category: string) => Categories[category.toUpperCase()]
             'ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2',
           ]"
         >
-			<div class="flex md:gap-6">
-				<RestaurantMenuItem v-for="menu in menus" :key="menu.id" :menu="menu" />
-			</div>
+        <div class="flex md:gap-6">
+          <RestaurantMenuItem v-for="menu in menus" :key="menu.id" :menu="menu" />
+        </div>
         </HeadlessTabPanel>
       </HeadlessTabPanels>
     </HeadlessTabGroup>

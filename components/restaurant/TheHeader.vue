@@ -5,10 +5,10 @@ const modalStore = useModalStore()
 const { modalType } = storeToRefs(modalStore);
 
 const menus = [
-    { name: "Dashboard", link: "/restaurant", icon: "bxs:dashboard" },
-    { name: "Order Lists", link: "/restaurant/order-lists", icon: "ri:file-list-3-line" },
-    { name: "History", link: "/restaurant/history", icon: "ic:outline-access-time" },
-    { name: "Bills", link: "/restaurant/bills", icon: "fluent:receipt-28-regular" },
+    { name: "Dashboard", link: "/", icon: "bxs:dashboard" },
+    { name: "Order Lists", link: "/", icon: "ri:file-list-3-line" },
+    { name: "History", link: "/", icon: "ic:outline-access-time" },
+    { name: "Bills", link: "/", icon: "fluent:receipt-28-regular" },
 ];
 </script>
 

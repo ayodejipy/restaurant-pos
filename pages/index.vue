@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { IMenu, GroupedMenu } from '~/utils/types/Menu';
+import type { IMenu, GroupedMenu, Order } from '~/utils/types/Menu';
 
 definePageMeta({
     layout: "restaurant",
@@ -28,18 +28,9 @@ const categorizeMenu = computed(() => menus.value?.reduce(reducer, {}) as unknow
 </script>
 
 <template>
-    <div v-if="pending" class="text-center flex items-center justify-center">
-        Loading...
-    </div>
-    <section v-else class="min-h-screen flex divide-x divide-gray-300 border-t border-gray-300">
+    <section class="min-h-screen flex divide-x divide-gray-300 border-t border-gray-300">
         <div class="flex-1 bg-gray-50 p-6 overflow-hidden">
-            <div class="flex items-center justify-between md:my-3">
-                <h5 class="font-medium text-base leading-8">Order List</h5>
-                <a href="#" class="text-sm text-gray-500">See All</a>
-            </div>
-            <div class="flex gap-6 pb-4 overflow-x-auto no-scrollbar">
-                <RestaurantOrderCard v-for="n in 10" :key="n" />
-            </div>
+            <RestaurantOrderLists />
 
             <div class="mt-4">
                 <RestaurantMenusTab v-if="menus?.length" :categories="categorizeMenu" />

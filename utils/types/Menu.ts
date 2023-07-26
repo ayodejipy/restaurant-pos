@@ -1,5 +1,5 @@
 export interface IMenu {
-    id: string | number;
+    id: number;
     name: string;
     image: string;
     description: string;
@@ -30,7 +30,9 @@ export interface Order {
     customer_name: string;
     table_number: string;
 	items: OrderItems[];
-	status: string;
+    status: string;
+    subtotal: number;
+    tax: number;
 }
 
 export type Category = "appetizer" | "main_course" | "dessert" | "beverage";
@@ -42,7 +44,3 @@ export type GroupedMenu = {
 
 export type modalTypes = "add-menu" | "edit-menu" | "details";
 
-// export interface IUserData {
-// 	data: IUser;
-// 	success: boolean
-// }
