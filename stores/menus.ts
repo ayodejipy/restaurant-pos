@@ -49,15 +49,13 @@ export const useMenuStore = defineStore('menus', () => {
     }
 
     function addToCart(payload: IMenu) {
-        // const cartKeys: OrderItemsKey[] = ['name', 'id', 'price', 'image', 'quantity', 'available']
         // check if story exists
         const index = bookedOrder.value.items.findIndex((menu) => menu.id == payload.id);
         // if found, do not include menu again
         if (index >= 0) return;
         const { is_soldout, updated_at, created_at, user_id, description, sold, category, ...rest } = payload;
-        const item: OrderItems = rest
-        // set quantity to one by default
-        item.quantity = 1
+        const item: OrderItems = { ...rest, quantity: 1 }
+        
         // add a new one to the end of the list
         bookedOrder.value.items.push(item as OrderItems)
 	}
