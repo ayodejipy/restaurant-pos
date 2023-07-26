@@ -1,50 +1,61 @@
 <script lang="ts" setup>
-import { cva } from "class-variance-authority";
+import { cva } from 'class-variance-authority'
 
 interface IProps {
-    id?: string;
-    modelValue: string | number;
-    required: boolean;
-    invalid: boolean;
-    ariaDescribedBy?: string;
-    placeholder: string;
-    rounded: "md" | "lg" | "xl";
+    id?: string
+    modelValue: string | number
+    required: boolean
+    invalid: boolean
+    ariaDescribedBy?: string
+    placeholder: string
+    rounded: 'md' | 'lg' | 'xl'
 }
 const props = withDefaults(defineProps<Partial<IProps>>(), {
     required: false,
     invalid: false,
-    ariaDescribedBy: "",
-    placeholder: "",
-    rounded: "xl",
-});
+    ariaDescribedBy: '',
+    placeholder: '',
+    rounded: 'xl',
+})
 
-const emits = defineEmits(["update:modelValue"]);
+const emits = defineEmits(['update:modelValue'])
 
 // inject the provided props here
-const field = inject("field", props);
+const field = inject('field', props)
 
-const showPlaceholder = computed<string>(() => !!field.placeholder ? field.placeholder : props.placeholder);
+const showPlaceholder = computed<string>(() =>
+    field.placeholder ? field.placeholder : props.placeholder
+)
 
 const Classes = computed(() => {
-    return cva("relative w-full px-4 border appearance-none text-gray-800 text-xs h-12 font-normal placeholder:focus:text-transparent placeholder:text-gray-400 bg-transparent focus:border-gray-500", {
-        variants: {
-            rounded: {
-                md: "rounded-md",
-                lg: "rounded-lg",
-                xl: "rounded-xl",
+    return cva(
+        'relative w-full px-4 border appearance-none text-gray-800 text-xs h-12 font-normal placeholder:focus:text-transparent placeholder:text-gray-400 bg-transparent focus:border-gray-500',
+        {
+            variants: {
+                rounded: {
+                    md: 'rounded-md',
+                    lg: 'rounded-lg',
+                    xl: 'rounded-xl',
+                },
             },
-        },
-    })({ rounded: props.rounded });
-});
+        }
+    )({ rounded: props.rounded })
+})
 
 function onChange(event: Event) {
-    emits("update:modelValue", (event.target as HTMLSelectElement)?.value);
+    emits('update:modelValue', (event.target as HTMLSelectElement)?.value)
 }
 </script>
 
 <template>
     <div class="relative cursor-pointer">
-        <select :id="field.id" :name="field.id" :value="modelValue" @input="onChange" :class="[Classes, field.invalid ? 'border-red-500' : 'border-gray-300']">
+        <select
+            :id="field.id"
+            :name="field.id"
+            :value="modelValue"
+            :class="[Classes, field.invalid ? 'border-red-500' : 'border-gray-300']"
+            @input="onChange"
+        >
             <option value="" disabled selected>{{ showPlaceholder }}</option>
             <slot></slot>
         </select>

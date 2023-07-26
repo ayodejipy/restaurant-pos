@@ -1,21 +1,21 @@
 <script lang="ts" setup>
-import type { IMenu, GroupedMenu, Order } from '~/utils/types/Menu';
+import type { IMenu, GroupedMenu, Order } from '~/utils/types/Menu'
 
 definePageMeta({
-    layout: "restaurant",
-});
+    layout: 'restaurant',
+})
 
 // const store = useUserStore();
 // const { user } = storeToRefs(store);
 
-const modalStore = useModalStore();
-const { modalType } = storeToRefs(modalStore);
+const modalStore = useModalStore()
+const { modalType } = storeToRefs(modalStore)
 
-const { data, pending, error } = await useFetch("/api/menu");
-const menus = ref<IMenu[] | null | undefined>(data.value?.data.data);
+const { data, pending, error } = await useFetch('/api/menu')
+const menus = ref<IMenu[] | null | undefined>(data.value?.data.data)
 
 // reducer function
-const reducer = (groups: GroupedMenu, item: IMenu) => { 
+const reducer = (groups: GroupedMenu, item: IMenu) => {
     const category = item.category
     // get group by its category, if it exists, return it otherwise return a group with an empty array
     const group = groups[category] || (groups[category] = [])
@@ -24,7 +24,6 @@ const reducer = (groups: GroupedMenu, item: IMenu) => {
 }
 
 const categorizeMenu = computed(() => menus.value?.reduce(reducer, {}) as unknown as GroupedMenu)
-
 </script>
 
 <template>
@@ -34,7 +33,7 @@ const categorizeMenu = computed(() => menus.value?.reduce(reducer, {}) as unknow
 
             <div class="mt-4">
                 <RestaurantMenusTab v-if="menus?.length" :categories="categorizeMenu" />
-                <div v-else> Not available...</div>
+                <div v-else>Not available...</div>
             </div>
         </div>
 
@@ -44,4 +43,3 @@ const categorizeMenu = computed(() => menus.value?.reduce(reducer, {}) as unknow
     </section>
     <RestaurantAddMenuModal :open="modalType == 'add-menu'" />
 </template>
-

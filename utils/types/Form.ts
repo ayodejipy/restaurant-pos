@@ -1,22 +1,22 @@
-import type { ErrorObject } from "@vuelidate/core";
+import type { ErrorObject } from '@vuelidate/core'
 
 export const DEFAULT_VALUE = {
-    $propertyPath: "",
+    $propertyPath: '',
     $property: '',
-    $validator: "",
-    $uid: "",
-    $message: "",
+    $validator: '',
+    $uid: '',
+    $message: '',
     $params: {
-        type: ""
+        type: '',
     },
     $response: false,
     $pending: false,
 }
 
 export interface IField {
-    id: string;
-    label: string;
-    required: boolean;
-    errors: ErrorObject[];
-    help: string;
+    id: string
+    label: string
+    required: boolean
+    errors: ErrorObject[]
+    help: string
 }

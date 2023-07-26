@@ -1,15 +1,15 @@
 // @ts-ignore
-import { serverSupabaseUser, serverSupabaseClient } from "#supabase/server";
+import { serverSupabaseUser, serverSupabaseClient } from '#supabase/server'
 
 export default defineEventHandler(async (event) => {
-	const client = serverSupabaseClient(event); // connect to supabase client
+    const client = serverSupabaseClient(event) // connect to supabase client
 
-	const data = await client.from('orders').select()
+    const data = await client.from('orders').select()
 
-	console.log(data)
-	
-	return {
-		data,
-		success: data.status === 200
-	}
-});
+    console.log(data)
+
+    return {
+        data,
+        success: data.status === 200,
+    }
+})

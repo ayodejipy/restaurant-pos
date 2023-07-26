@@ -1,22 +1,22 @@
-import { Store, Pinia, getActivePinia } from "pinia"
+import { Store, Pinia, getActivePinia } from 'pinia'
 
 interface ExtendedPinia extends Pinia {
-  _s: Map<string, Store>;
+    _s: Map<string, Store>
 }
-export const $resetPiniaStores = (): Record<string | "all", () => void> => {
-  	const pinia = getActivePinia() as ExtendedPinia;
+export const $resetPiniaStores = (): Record<string | 'all', () => void> => {
+    const pinia = getActivePinia() as ExtendedPinia
 
-	if (!pinia) {
-		throw new Error("There is no stores");
-	}
+    if (!pinia) {
+        throw new Error('There is no stores')
+    }
 
-	const resetStores: Record<string, () => void> = {};
+    const resetStores: Record<string, () => void> = {}
 
-	pinia._s.forEach((store, name) => {
-		resetStores[name] = () => store.$reset();
-	});
+    pinia._s.forEach((store, name) => {
+        resetStores[name] = () => store.$reset()
+    })
 
-	resetStores.all = () => pinia._s.forEach((store) => store.$reset());
-	
- 	return resetStores;
-};
+    resetStores.all = () => pinia._s.forEach((store) => store.$reset())
+
+    return resetStores
+}

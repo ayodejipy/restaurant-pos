@@ -1,40 +1,45 @@
 <script lang="ts" setup>
 export type ChildLinks = {
-    url: string;
-    name: string;
-};
+    url: string
+    name: string
+}
 type IProps = {
-    isOpen: boolean;
-    leftIcon: string;
-    size: "xs" | "sm" | "md" | "lg";
-    rounded: "sm" | "md" | "lg" | "xl" | "default";
-    subMenus: ChildLinks[];
-};
+    isOpen: boolean
+    leftIcon: string
+    size: 'xs' | 'sm' | 'md' | 'lg'
+    rounded: 'sm' | 'md' | 'lg' | 'xl' | 'default'
+    subMenus: ChildLinks[]
+}
 
 const props = withDefaults(defineProps<Partial<IProps>>(), {
     isOpen: false,
-    leftIcon: "",
-    size: "md",
-    rounded: "md",
-    activeClass: "active",
+    leftIcon: '',
+    size: 'md',
+    rounded: 'md',
+    activeClass: 'active',
     subMenus: () => [],
-});
+})
 
-provide("options", props);
+provide('options', props)
 
 const emit = defineEmits<{
-    click: [event: Event];
-}>();
+    click: [event: Event]
+}>()
 </script>
 
 <template>
     <AtomTheButton v-bind="$attrs" intent="default" @click="emit('click', $event)">
         <slot />
     </AtomTheButton>
-    <div class="pl-4 transition-all duration-150" v-if="props.isOpen">
+    <div v-if="props.isOpen" class="pl-4 transition-all duration-150">
         <ul>
-            <li class="relative afterline" v-for="sub in props.subMenus">
-                <AtomTheLink :url="sub.url" class="trackline ml-4 text-gray-700 text-xs font-normal hover:bg-gray-100 hover:text-gray-700"> {{ sub.name }} </AtomTheLink>
+            <li v-for="sub in props.subMenus" class="relative afterline">
+                <AtomTheLink
+                    :url="sub.url"
+                    class="trackline ml-4 text-gray-700 text-xs font-normal hover:bg-gray-100 hover:text-gray-700"
+                >
+                    {{ sub.name }}
+                </AtomTheLink>
             </li>
         </ul>
     </div>

@@ -1,9 +1,9 @@
 <script setup lang="ts">
 definePageMeta({
-    layout: "restaurant",
-});
+    layout: 'restaurant',
+})
 </script>
 
 <template>
-	<RestaurantProfileInformation />
+    <RestaurantProfileInformation />
 </template>

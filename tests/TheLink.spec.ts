@@ -1,5 +1,3 @@
-import TheLink from "~/components/atom/TheLink.vue"
+import TheLink from '~/components/atom/TheLink.vue'
 
-describe('describe the link component', () => { 
-
-})
+describe('describe the link component', () => {})
