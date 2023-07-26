@@ -1,3 +1,5 @@
+import type { statusTypes } from '~/utils/enums';
+
 export interface IMenu {
     id: number;
     name: string;
@@ -29,8 +31,8 @@ export type OrderItemsKey = keyof OrderItems;
 export interface Order {
     customer_name: string;
     table_number: string;
-	items: OrderItems[];
-    status: string;
+    items: OrderItems[];
+    status: statusTypes;
     subtotal: number;
     tax: number;
 }

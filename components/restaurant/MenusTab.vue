@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import type { GroupedMenu } from '~/utils/types/Menu';
-import { Categories } from '~/utils/enums/Category';
+import { Categories } from '~/utils/enums';
 
 const props = defineProps<{
   categories: GroupedMenu
@@ -55,3 +55,4 @@ const getCatergory = (category: string) => Categories[category.toUpperCase()]
     </HeadlessTabGroup>
   </div>
 </template>
+~/utils/enums

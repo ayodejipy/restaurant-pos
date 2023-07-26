@@ -16,7 +16,7 @@ const calculateTax = computed(() => (subTotal.value * tax.value) / 100);
 async function processOrder() {
     try {
         isLoading.value = true;
-        const body = { ...bookedOrder.value, subtotal: subTotal.value, tax: calculateTax.value, status: 'processing' };
+        const body = { ...bookedOrder.value, subtotal: subTotal.value, tax: calculateTax.value, status: 'waiting' };
         const { success } = await $fetch("/api/order/add", { method: "POST", body });
         if (success) {
             $toast.success("Hurray! Order is been processed...");
