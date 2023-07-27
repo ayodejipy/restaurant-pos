@@ -1,10 +1,10 @@
-import { IMenu, OrderItemsKey, Order, OrderItems, IMenuKeys } from '~/utils/types/Menu'
+import { IMenu, Order, OrderItems, IMenuKeys } from '~/utils/types/Menu'
 
-const DEFAULT_BOOKED = {
+const DEFAULT_BOOKED: Order = {
     customer_name: '',
     table_number: '',
     items: [],
-    status: '',
+    status: 'waiting',
     subtotal: 0,
     tax: 0,
 }
@@ -39,7 +39,7 @@ export const useMenuStore = defineStore('menus', () => {
 
         // Loop through each key in the form object
         let key: IMenuKeys
-        for (const key in form.value) {
+        for (key in form.value) {
             // Set number/string for appropriate keys
             // @ts-ignore
             form.value[key] = numberKeys.includes(key) ? 0 : ''

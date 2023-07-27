@@ -34,7 +34,6 @@ export default function (form?: IForm) {
     const orderRules = computed(() => ({
         customer_name: {
             required: helpers.withMessage('Customer name is required.', required),
-            minLength: minLength(4),
         },
         table_number: {
             required: helpers.withMessage('Table field is required.', required),

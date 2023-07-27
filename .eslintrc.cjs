@@ -9,13 +9,15 @@ module.exports = {
         parser: '@typescript-eslint/parser',
     },
     extends: ['@nuxtjs/eslint-config-typescript', 'plugin:prettier/recommended'],
-    plugins: [],
+    plugins: ['prettier'],
     rules: {
         'prettier/prettier': 'error',
+        indent: 'off',
         'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
         'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
         eqeqeq: 'off',
         'no-bitwise': 'off',
         'vue/multi-word-component-names': 'off',
+        'no-unused-vars': ['error', { ignoreRestSiblings: true }],
     },
 }

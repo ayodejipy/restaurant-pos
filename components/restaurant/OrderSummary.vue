@@ -1,5 +1,10 @@
 <script lang="ts" setup>
-import { IMenu, OrderItems } from '~/utils/types/Menu'
+import { OrderItems } from '~/utils/types/Menu'
+
+const props = defineProps<{
+    isDisabled: boolean
+}>()
+
 const tax = ref<number>(10)
 
 const { formatted } = useCurrency()
@@ -27,11 +32,13 @@ async function processOrder() {
             tax: calculateTax.value,
             status: 'waiting',
         }
-        const { success } = await $fetch('/api/order/add', { method: 'POST', body })
-        if (success) {
-            $toast.success('Hurray! Order is been processed...')
-            menuStore.clearBooked()
-        }
+        console.log({ body })
+
+        // const { success } = await $fetch('/api/order/add', { method: 'POST', body })
+        // if (success) {
+        //     $toast.success('Hurray! Order is been processed...')
+        //     menuStore.clearBooked()
+        // }
     } catch (error) {
         $toast.error('Unable to process order, please try again soon.')
     } finally {
@@ -64,10 +71,12 @@ async function processOrder() {
                 :loading="isLoading"
                 rounded="lg"
                 intent="default"
-                class="w-full bg-blue-600 text-white font-medium"
+                class="w-full bg-blue-600 text-white font-medium disabled:bg-blue-800 disabled:text-gray-300 disabled:cursor-not-allowed"
+                :disabled="isDisabled"
                 @click="processOrder"
-                >Process Transaction</AtomTheButton
             >
+                Process Transaction
+            </AtomTheButton>
         </div>
     </div>
 </template>
