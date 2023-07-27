@@ -36,10 +36,13 @@ describe('describe useMenuStore', () => {
     it('initializes an empty user object', () => {
         expect(store.user).toEqual(DEFAULT_USER)
     })
-
     it('should contain user information', () => {
         store.user = DEFAULT_USER_DATA
         expect(store.user).toEqual(DEFAULT_USER_DATA)
+    })
+    it('isAuthenticated should return true', () => {
+        store.user = DEFAULT_USER_DATA
+        expect(store.isAuthenticated).toBeTruthy()
     })
 
     afterEach(() => {
