@@ -1,11 +1,11 @@
 import { setActivePinia, createPinia } from 'pinia'
 import { createTestingPinia } from '@pinia/testing'
-import { useMenuStore } from './menus'
-import { $resetPiniaStores } from './reset'
+import { useMenuStore } from '../menus'
+import { $resetPiniaStores } from '../reset'
 import { IMenu, IMenuKeys, Order, OrderItems } from '~/utils/types/Menu'
 
 const DEFAULT_MENU: IMenu = {
-    id: '',
+    id: 0,
     name: '',
     image: '',
     description: '',
@@ -24,7 +24,9 @@ const DEFAULT_ORDER: Order = {
     customer_name: '',
     table_number: '',
     items: [],
-    status: '',
+    status: 'waiting',
+    subtotal: 0,
+    tax: 0,
 }
 const DEFAULT_ORDER_DATA: Order = {
     customer_name: 'John Doe',
@@ -47,7 +49,9 @@ const DEFAULT_ORDER_DATA: Order = {
             available: 10,
         },
     ],
-    status: 'processing',
+    subtotal: 120,
+    tax: 12,
+    status: 'waiting',
 }
 
 const DEFAULT_MENU_DATA: IMenu = {

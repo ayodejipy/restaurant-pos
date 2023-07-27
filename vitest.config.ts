@@ -21,6 +21,6 @@ export default defineConfig({
     test: {
         environment: 'jsdom',
         globals: true,
-        include: ['./stores/*.test.ts'],
+        include: ['./stores/tests/*.test.ts'],
     },
 })
