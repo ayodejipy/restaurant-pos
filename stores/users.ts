@@ -10,10 +10,13 @@ export const useUserStore = defineStore('user', () => {
         updated_at: '',
         created_at: '',
     })
-    const isAuthenticated = computed<boolean>(() => !!Object.values(user.value))
+
+    const isAuthenticated = computed<boolean>(() => !!user.value.id)
+    const getAuthenticated = () => !!user.value.id
 
     return {
         user,
+        getAuthenticated,
         isAuthenticated,
     }
 })

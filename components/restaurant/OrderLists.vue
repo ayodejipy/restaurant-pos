@@ -1,6 +1,9 @@
 <script lang="ts" setup>
 import type { Order } from '~/utils/types/Menu'
 
+const modalStore = useModalStore()
+const { modalType } = storeToRefs(modalStore)
+
 const { data, pending, error } = await useFetch('/api/order')
 const orders = ref<Order[] | null | undefined>(data.value?.data.data)
 
@@ -35,4 +38,5 @@ console.log({ orders })
             />
         </div>
     </div>
+    <!-- <RestaurantUpdateOrderModal :open="modalType == 'edit-order'" /> -->
 </template>

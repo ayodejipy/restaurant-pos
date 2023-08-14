@@ -89,7 +89,11 @@ const closeModal = () => {
             </Field>
             <Field label="Select category">
                 <AtomTheSelect v-model="form.category" placeholder="Select category">
-                    <option v-for="category in categories" :value="category.sub">
+                    <option
+                        v-for="category in categories"
+                        :key="category.sub"
+                        :value="category.sub"
+                    >
                         {{ category.title }}
                     </option>
                 </AtomTheSelect>

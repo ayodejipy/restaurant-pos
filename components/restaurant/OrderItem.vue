@@ -38,8 +38,9 @@ const { increaseOrderQuantity, decreaseOrderQuantity } = menuStore
                         </AtomTheButton>
                         <span
                             class="inline-flex justify-center items-center w-8 font-semibold text-gray-60"
-                            >{{ item.quantity }}</span
                         >
+                            {{ item.quantity }}
+                        </span>
                         <AtomTheButton
                             intent="default"
                             class="bg-blue-600 text-white w-8 h-8 rounded-full"

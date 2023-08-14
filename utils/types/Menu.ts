@@ -44,4 +44,4 @@ export type GroupedMenu = {
     [key: string]: IMenu[]
 }
 
-export type modalTypes = 'add-menu' | 'edit-menu' | 'details'
+export type modalTypes = 'add-menu' | 'edit-order' | 'edit-menu' | 'details'

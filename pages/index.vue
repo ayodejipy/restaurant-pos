@@ -1,8 +1,9 @@
 <script lang="ts" setup>
-import type { IMenu, GroupedMenu, Order } from '~/utils/types/Menu'
+import type { IMenu, GroupedMenu } from '~/utils/types/Menu'
 
 definePageMeta({
     layout: 'restaurant',
+    middleware: 'auth',
 })
 
 // const store = useUserStore();

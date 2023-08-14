@@ -2,10 +2,15 @@
 import type { Order } from '~/utils/types/Menu'
 import { statusTypes, OrderStatus } from '~/utils/enums'
 
-// type status = ReturnType<typeof OrderStatus>;
-defineProps<{
+const props = defineProps<{
     order: Order
 }>()
+
+const modalStore = useModalStore()
+const { modalType } = storeToRefs(modalStore)
+
+const menuStore = useMenuStore()
+const { bookedOrder } = storeToRefs(menuStore)
 
 const colors: Record<statusTypes, string> = reactive({
     waiting: 'bg-yellow-500',
@@ -16,18 +21,30 @@ const colors: Record<statusTypes, string> = reactive({
 
 const getOrderStatus = (status: statusTypes) => OrderStatus[status]
 const getColor = (status: statusTypes) => colors[status] ?? colors.ready
+
+// set current order to store then pop modal
+const toggleModal = () => {
+    bookedOrder.value = props.order
+    modalType.value = 'edit-order'
+}
 </script>
 
 <template>
-    <AtomTheCard rounded="xl" shadow="lg" class="bg-white p-4 min-w-[16rem] max-w-full">
+    <AtomTheCard
+        rounded="xl"
+        shadow="lg"
+        class="bg-white p-4 min-w-[16rem] max-w-full"
+        role="button"
+        @click="toggleModal"
+    >
         <div class="flex items-start justify-between">
             <div class="flex flex-col gap-1">
                 <h5 class="font-semibold text-base text-gray-600">{{ order.customer_name }}</h5>
-                <span class="inline-block text-xs text-gray-400"
-                    >{{ `${order.items.length} Items` }}
+                <span class="inline-block text-xs text-gray-400">
+                    {{ `${order.items.length} Items` }}
                     <span class="font-semibold text-sm">&bull;</span>
-                    {{ `Table ${order.table_number}` }}</span
-                >
+                    {{ `Table ${order.table_number}` }}
+                </span>
             </div>
             <p class="text-xs text-gray-400 font-medium">#12532</p>
         </div>

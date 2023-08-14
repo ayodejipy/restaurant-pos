@@ -7,7 +7,7 @@ export default defineEventHandler(async (event) => {
 
     const { data, status } = await client.from('profiles').select('*')
 
-    // edit object coming back to
+    // append email to user
     const userObj = {
         ...data[0],
         email: user.email,

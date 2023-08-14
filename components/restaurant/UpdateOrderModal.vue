@@ -8,18 +8,17 @@ defineProps<{
 const isLoading = ref<boolean>(false)
 
 const menuStore = useMenuStore()
-const { form } = storeToRefs(menuStore)
+const { bookedOrder } = storeToRefs(menuStore)
 
 // modal store
 const modalStore = useModalStore()
 const { modalType } = storeToRefs(modalStore)
 
-const categories: { title: string; sub: string }[] = [
-    { title: 'Appetizer', sub: 'appetizer' },
-    { title: 'Main course', sub: 'main_course' },
-    { title: 'dessert', sub: 'dessert' },
-    { title: 'Beverage', sub: 'beverage' },
-    { title: 'Other', sub: 'other' },
+const statusTypes: { title: string; value: string }[] = [
+    { title: 'Waiting', value: 'waiting' },
+    { title: 'Ready', value: 'ready' },
+    { title: 'Completed', value: 'completed' },
+    { title: 'Canceled', value: 'canceled' },
 ]
 
 async function submitForm() {
@@ -74,57 +73,60 @@ const closeModal = () => {
             </svg>
         </AtomTheButton>
 
-        <form class="my-10 flex flex-col gap-2 px-4" @submit.prevent="submitForm">
-            <Field label="Name">
-                <AtomInput v-model="form.name" type="text" placeholder="Enter meal name" />
-            </Field>
-            <Field label="Meal image">
-                <AtomInput v-model="form.image" type="text" placeholder="Enter meal image" />
-            </Field>
-            <Field label="Meal description">
-                <AtomTextarea
-                    v-model="form.description"
-                    placeholder="Enter short description about the meal"
-                />
-            </Field>
-            <Field label="Select category">
-                <AtomTheSelect v-model="form.category" placeholder="Select category">
-                    <option v-for="category in categories" :value="category.sub">
-                        {{ category.title }}
-                    </option>
-                </AtomTheSelect>
-            </Field>
-            <div class="flex gap-4">
-                <div class="w-full">
-                    <Field label="Price">
-                        <AtomInput
-                            v-model="form.price"
-                            type="text"
-                            placeholder="Enter meal price"
-                        />
-                    </Field>
-                </div>
-                <div class="w-full">
-                    <Field label="Quantity">
-                        <AtomInput
-                            v-model="form.quantity"
-                            type="text"
-                            placeholder="Enter quantity"
-                        />
-                    </Field>
+        <div class="my-10 flex flex-col gap-4 px-4">
+            <div class="w-full">
+                <h4 class="font-semibold text-sm">Customer name</h4>
+                <p class="text-sm">{{ bookedOrder.customer_name }}</p>
+            </div>
+            <div class="w-full">
+                <h4 class="font-semibold text-sm">Table</h4>
+                <p class="text-sm">{{ `Table ${bookedOrder.table_number}` }}</p>
+            </div>
+            <div class="w-full">
+                <h4 class="font-semibold text-sm">Order Details</h4>
+                <div class="flex items-center text-sm">
+                    <ul>
+                        <li v-for="order in bookedOrder.items" :key="order.id">
+                            {{ order.name }} - {{ order.price }} ({{ `${order.quantity}x` }})
+                        </li>
+                    </ul>
                 </div>
             </div>
 
-            <div class="mt-6">
+            <div class="w-full">
+                <Field label="Status">
+                    <AtomTheSelect v-model="bookedOrder.status" placeholder="Select status">
+                        <option
+                            v-for="status in statusTypes"
+                            :key="status.value"
+                            :value="status.value"
+                        >
+                            {{ status.title }}
+                        </option>
+                    </AtomTheSelect>
+                </Field>
+            </div>
+
+            <div class="mt-3 w-full space-y-2 md:w-64 md:mx-auto">
                 <AtomTheButton
                     type="submit"
                     rounded="lg"
                     intent="default"
                     :loading="isLoading"
                     class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium"
-                    >Submit</AtomTheButton
                 >
+                    Submit
+                </AtomTheButton>
+
+                <AtomTheButton
+                    intent="default"
+                    :loading="isLoading"
+                    class="w-full text-gray-400 font-normal"
+                    @click="closeModal"
+                >
+                    Cancel
+                </AtomTheButton>
             </div>
-        </form>
+        </div>
     </AtomBaseModal>
 </template>
