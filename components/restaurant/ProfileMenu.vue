@@ -1,5 +1,18 @@
 <script setup lang="ts">
-async function logOut() {}
+const { $toast } = useNuxtApp()
+const router = useRouter()
+
+// useSupabaseAuthClient is not available on the nuxt module
+const supabase = useSupabaseAuthClient()
+
+async function handleLogout() {
+    const { error } = await supabase.auth.signOut()
+    if (error)
+        return $toast.error(
+            'Unable to sign you out at the moment, please contact site adminstrator.'
+        )
+    router.push('/login')
+}
 </script>
 
 <template>
@@ -47,6 +60,7 @@ async function logOut() {}
                     <HeadlessMenuItem v-slot="{ active }">
                         <button
                             class="group flex w-full items-center rounded-md px-2 py-2 text-sm text-red-600"
+                            @click="handleLogout"
                         >
                             <!-- <DeleteIcon :active="active" class="mr-2 h-5 w-5 text-violet-400" aria-hidden="true" /> -->
                             Sign out

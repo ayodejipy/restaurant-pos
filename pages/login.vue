@@ -9,13 +9,13 @@ const router = useRouter()
 const loading = ref<boolean>(false)
 const email = ref<string>('')
 
-// const supabase = useSupabaseClient()
-// // listen to sign in event and redirect user back
-// supabase.auth.onAuthStateChange((event, session) => {
-//     const redirectPath = (query.redirect as string) ?? '/'
-//     if (event == 'SIGNED_IN') console.log('SIGNED_IN', { query, redirectPath })
-//     // router.push({ path: redirectPath })
-// })
+const supabase = useSupabaseClient()
+// listen to sign in event and redirect user back
+supabase.auth.onAuthStateChange((event, session) => {
+    const redirectPath = (query.redirect as string) ?? '/'
+    if (event == 'SIGNED_IN') console.log('SIGNED_IN', { query, redirectPath })
+    router.push({ path: redirectPath })
+})
 
 const handleLogin = async () => {
     loading.value = true
