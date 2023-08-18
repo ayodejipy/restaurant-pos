@@ -9,12 +9,9 @@ export default defineEventHandler(async (event) => {
     const { data, error } = await client.auth.signInWithOtp({
         email: body.email,
         options: {
-            emailRedirectTo: 'http://localhost:3000/restaurant/profile',
+            emailRedirectTo: 'http://localhost:3000',
         },
     })
-
-    console.log({ data })
-    console.log({ error })
 
     return {
         data,

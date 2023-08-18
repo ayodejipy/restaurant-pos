@@ -13,8 +13,7 @@ const supabase = useSupabaseClient()
 // listen to sign in event and redirect user back
 supabase.auth.onAuthStateChange((event, session) => {
     const redirectPath = (query.redirect as string) ?? '/'
-    if (event == 'SIGNED_IN') console.log('SIGNED_IN', { query, redirectPath })
-    router.push({ path: redirectPath })
+    if (event == 'SIGNED_IN') router.push({ path: redirectPath })
 })
 
 const handleLogin = async () => {

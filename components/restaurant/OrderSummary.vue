@@ -32,13 +32,12 @@ async function processOrder() {
             tax: calculateTax.value,
             status: 'waiting',
         }
-        console.log({ body })
 
-        // const { success } = await $fetch('/api/order/add', { method: 'POST', body })
-        // if (success) {
-        //     $toast.success('Hurray! Order is been processed...')
-        //     menuStore.clearBooked()
-        // }
+        const { success } = await $fetch('/api/order/add', { method: 'POST', body })
+        if (success) {
+            $toast.success('Hurray! Order is been processed...')
+            menuStore.clearBooked()
+        }
     } catch (error) {
         $toast.error('Unable to process order, please try again soon.')
     } finally {
