@@ -81,8 +81,8 @@ const closeModal = () => {
                 <h4 class="font-semibold text-sm">Order Details</h4>
                 <div class="flex items-center text-sm">
                     <ul>
-                        <li v-for="order in item.items" :key="order.id">
-                            {{ order.name }} - {{ order.price }} ({{ `${order.quantity}x` }})
+                        <li v-for="list in item.items" :key="list.id">
+                            {{ list.name }} - {{ list.price }} ({{ `${list.quantity}x` }})
                         </li>
                     </ul>
                 </div>
@@ -116,7 +116,6 @@ const closeModal = () => {
 
                 <AtomTheButton
                     intent="default"
-                    :loading="isLoading"
                     class="w-full text-gray-300 font-normal"
                     @click="closeModal"
                 >
