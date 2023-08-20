@@ -22,11 +22,6 @@ const colors: Record<statusTypes, string> = reactive({
 const getOrderStatus = (status: statusTypes) => OrderStatus[status]
 const getColor = (status: statusTypes) => colors[status] ?? colors.ready
 
-// set current order to store then pop modal
-const toggleModal = () => {
-    bookedOrder.value = props.order
-    modalType.value = 'edit-order'
-}
 </script>
 
 <template>
@@ -35,7 +30,6 @@ const toggleModal = () => {
         shadow="lg"
         class="bg-white p-4 min-w-[16rem] max-w-full"
         role="button"
-        @click="toggleModal"
     >
         <div class="flex items-start justify-between">
             <div class="flex flex-col gap-1">

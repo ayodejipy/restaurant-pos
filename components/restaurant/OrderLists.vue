@@ -7,7 +7,12 @@ const { modalType } = storeToRefs(modalStore)
 const { data, pending, error } = await useFetch('/api/order')
 const orders = ref<Order[] | null | undefined>(data.value?.data.data)
 
-console.log({ orders })
+const orderItem = ref<Order | null>(null)
+// set current order to store then pop modal
+const toggleModal = (order: Order) => {
+    orderItem.value = order
+    modalType.value = 'edit-order'
+}
 </script>
 
 <template>
@@ -35,8 +40,9 @@ console.log({ orders })
                 v-for="order in orders"
                 :key="order.customer_name"
                 :order="order"
+                @click="toggleModal(order)"
             />
         </div>
     </div>
-    <!-- <RestaurantUpdateOrderModal :open="modalType == 'edit-order'" /> -->
+    <RestaurantUpdateOrderModal :open="modalType == 'edit-order'" :order="orderItem" />
 </template>

@@ -29,6 +29,7 @@ export interface OrderItems {
 
 export type OrderItemsKey = keyof OrderItems
 export interface Order {
+    id?: number
     customer_name: string
     table_number: string
     items: OrderItems[]

@@ -1,14 +1,19 @@
 <script setup lang="ts">
+import type { Order } from '~/utils/types/Menu'
+
 const { $toast } = useNuxtApp()
 
-defineProps<{
+const props = defineProps<{
     open: boolean
+    order: Order
 }>()
 
 const isLoading = ref<boolean>(false)
 
 const menuStore = useMenuStore()
-const { bookedOrder } = storeToRefs(menuStore)
+// const { bookedOrder } = storeToRefs(menuStore)
+
+const item = computed(() => props.order)
 
 // modal store
 const modalStore = useModalStore()
@@ -24,23 +29,15 @@ const statusTypes: { title: string; value: string }[] = [
 async function submitForm() {
     try {
         isLoading.value = true
-        const body = {
-            name: form.value.name,
-            image: form.value.image,
-            description: form.value.description,
-            category: form.value.category,
-            price: form.value.price,
-            quantity: form.value.quantity,
-            available: form.value.quantity,
-        }
-        const { success } = await $fetch('/api/menu/add', { method: 'POST', body })
+        const body = { ...item.value }
+        const { success } = await $fetch('/api/order/update', { method: 'POST', body })
         if (success) {
-            $toast.success('Menu added successfully...')
+            $toast.success(`ORDER ${item.value.id} was successfully updated.`)
             // close modal
-            modalType.value = null
+            closeModal()
         }
     } catch (error) {
-        $toast.error('Oh no! We are unable to create your meal at this time.')
+        $toast.error(`Unable to update order for ${item.value.customer_name} at this time.`)
     } finally {
         isLoading.value = false
     }
@@ -50,8 +47,6 @@ const closeModal = () => {
     modalType.value = null
     menuStore.clearForm()
 }
-
-// onBeforeUnmount(() => console.log("onBeforeUnmount"))
 </script>
 
 <template>
@@ -76,17 +71,17 @@ const closeModal = () => {
         <div class="my-10 flex flex-col gap-4 px-4">
             <div class="w-full">
                 <h4 class="font-semibold text-sm">Customer name</h4>
-                <p class="text-sm">{{ bookedOrder.customer_name }}</p>
+                <p class="text-sm">{{ item.customer_name }}</p>
             </div>
             <div class="w-full">
                 <h4 class="font-semibold text-sm">Table</h4>
-                <p class="text-sm">{{ `Table ${bookedOrder.table_number}` }}</p>
+                <p class="text-sm">{{ `Table ${item.table_number}` }}</p>
             </div>
             <div class="w-full">
                 <h4 class="font-semibold text-sm">Order Details</h4>
                 <div class="flex items-center text-sm">
                     <ul>
-                        <li v-for="order in bookedOrder.items" :key="order.id">
+                        <li v-for="order in item.items" :key="order.id">
                             {{ order.name }} - {{ order.price }} ({{ `${order.quantity}x` }})
                         </li>
                     </ul>
@@ -95,7 +90,7 @@ const closeModal = () => {
 
             <div class="w-full">
                 <Field label="Status">
-                    <AtomTheSelect v-model="bookedOrder.status" placeholder="Select status">
+                    <AtomTheSelect v-model="item.status" placeholder="Select status">
                         <option
                             v-for="status in statusTypes"
                             :key="status.value"
@@ -107,13 +102,14 @@ const closeModal = () => {
                 </Field>
             </div>
 
-            <div class="mt-3 w-full space-y-2 md:w-64 md:mx-auto">
+            <div class="mt-3 w-full space-y md:w-64 md:mx-auto">
                 <AtomTheButton
                     type="submit"
                     rounded="lg"
                     intent="default"
                     :loading="isLoading"
                     class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium"
+                    @click="submitForm"
                 >
                     Submit
                 </AtomTheButton>
@@ -121,7 +117,7 @@ const closeModal = () => {
                 <AtomTheButton
                     intent="default"
                     :loading="isLoading"
-                    class="w-full text-gray-400 font-normal"
+                    class="w-full text-gray-300 font-normal"
                     @click="closeModal"
                 >
                     Cancel
