@@ -5,15 +5,16 @@ const { $toast } = useNuxtApp()
 
 const props = defineProps<{
     open: boolean
-    order: Order
+    order: Order | null
 }>()
 
 const isLoading = ref<boolean>(false)
+const { formatted } = useCurrency()
 
 const menuStore = useMenuStore()
 // const { bookedOrder } = storeToRefs(menuStore)
 
-const item = computed(() => props.order)
+const item = computed(() => props.order as Order)
 
 // modal store
 const modalStore = useModalStore()
@@ -32,12 +33,12 @@ async function submitForm() {
         const body = { ...item.value }
         const { success } = await $fetch('/api/order/update', { method: 'POST', body })
         if (success) {
-            $toast.success(`ORDER ${item.value.id} was successfully updated.`)
+            $toast.success(`ORDER ${item.value?.id} was successfully updated.`)
             // close modal
             closeModal()
         }
     } catch (error) {
-        $toast.error(`Unable to update order for ${item.value.customer_name} at this time.`)
+        $toast.error(`Unable to update order for ${item.value?.customer_name} at this time.`)
     } finally {
         isLoading.value = false
     }
@@ -71,18 +72,19 @@ const closeModal = () => {
         <div class="my-10 flex flex-col gap-4 px-4">
             <div class="w-full">
                 <h4 class="font-semibold text-sm">Customer name</h4>
-                <p class="text-sm">{{ item.customer_name }}</p>
+                <p class="text-sm">{{ item?.customer_name }}</p>
             </div>
             <div class="w-full">
                 <h4 class="font-semibold text-sm">Table</h4>
-                <p class="text-sm">{{ `Table ${item.table_number}` }}</p>
+                <p class="text-sm">{{ `Table ${item?.table_number}` }}</p>
             </div>
             <div class="w-full">
                 <h4 class="font-semibold text-sm">Order Details</h4>
                 <div class="flex items-center text-sm">
                     <ul>
-                        <li v-for="list in item.items" :key="list.id">
-                            {{ list.name }} - {{ list.price }} ({{ `${list.quantity}x` }})
+                        <li v-for="list in item?.items" :key="list.id">
+                            {{ `${list.quantity}x` }} {{ list.name }}
+                            <span class="font-semibold"> {{ formatted(list.price) }} </span>
                         </li>
                     </ul>
                 </div>
