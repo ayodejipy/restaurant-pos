@@ -7,7 +7,7 @@ const { modalType } = storeToRefs(modalStore)
 const { data, pending, error } = await useFetch('/api/order')
 const orders = ref<Order[] | null | undefined>(data.value?.data.data)
 
-const orderItem = ref<Order>()
+const orderItem = ref<Order | null>(null)
 
 // set current order to store then pop modal
 const toggleModal = (order: Order) => {

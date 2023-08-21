@@ -38,7 +38,7 @@ async function submitForm() {
         if (success) {
             $toast.success('Menu added successfully...')
             // close modal
-            modalType.value = null
+            closeModal()
         }
     } catch (error) {
         $toast.error('Oh no! We are unable to create your meal at this time.')
