@@ -16,7 +16,7 @@ interface InputProps {
 
 const props = withDefaults(defineProps<Partial<InputProps>>(), {
     modelValue: '',
-    rows: '5',
+    rows: '10',
     cols: '',
     required: false,
     invalid: false,

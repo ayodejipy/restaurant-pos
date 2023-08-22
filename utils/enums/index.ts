@@ -18,3 +18,10 @@ export const OrderStatus = {
 // type Direction = typeof OrderStatus[keyof typeof OrderStatus];
 
 export type statusTypes = keyof typeof OrderStatus
+
+export const modals = {
+    addMenu: 'add-menu',
+    editOrder: 'edit-order',
+    editMenu: 'edit-menu',
+    details: 'details',
+}

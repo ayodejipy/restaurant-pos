@@ -1,17 +1,28 @@
 <script lang="ts" setup>
-import type { IMenu } from '~/utils/types/Menu'
+import { modals } from '~/utils/enums'
+import type { IMenu, modalTypes } from '~/utils/types/Menu'
 
 const props = defineProps<{
     menu: IMenu
 }>()
 const { formatted } = useCurrency()
+
 const menuStore = useMenuStore()
 const { addToCart } = menuStore
+const { form } = storeToRefs(menuStore)
+
+const modalStore = useModalStore()
+const { modalType } = storeToRefs(modalStore)
 
 const isDisabled = computed<boolean>(() => props.menu.is_soldout)
 const backgroundColor = computed<string>(() =>
     isDisabled.value ? 'bg-gray-100 shadow-gray-100' : 'bg-white'
 )
+
+const toggleEdit = () => {
+    form.value = { ...props.menu }
+    modalType.value = modals.editMenu as unknown as modalTypes
+}
 </script>
 
 <template>
@@ -28,7 +39,8 @@ const backgroundColor = computed<string>(() =>
                 <div>
                     <h5
                         aria-label="meal name"
-                        class="font-medium text-lg text-gray-900 leading-tight"
+                        class="font-medium text-lg text-gray-900 leading-tight cursor-pointer"
+                        @click="toggleEdit"
                     >
                         {{ menu.name }}
                     </h5>

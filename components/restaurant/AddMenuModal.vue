@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import { modals } from '~/utils/enums'
+import { IMenu } from '~/utils/types/Menu'
+
 const { $toast } = useNuxtApp()
 
 defineProps<{
@@ -14,6 +17,8 @@ const { form } = storeToRefs(menuStore)
 const modalStore = useModalStore()
 const { modalType } = storeToRefs(modalStore)
 
+const isEditModal = computed<boolean>(() => modalType.value === modals.editMenu)
+
 const categories: { title: string; sub: string }[] = [
     { title: 'Appetizer', sub: 'appetizer' },
     { title: 'Main course', sub: 'main_course' },
@@ -23,9 +28,11 @@ const categories: { title: string; sub: string }[] = [
 ]
 
 async function submitForm() {
+    const operation = isEditModal.value ? 'updated' : 'added'
     try {
         isLoading.value = true
-        const body = {
+        const endpoint = isEditModal.value ? '/api/menu/update' : '/api/menu/add'
+        const body: Partial<IMenu> = {
             name: form.value.name,
             image: form.value.image,
             description: form.value.description,
@@ -34,14 +41,19 @@ async function submitForm() {
             quantity: form.value.quantity,
             available: form.value.quantity,
         }
-        const { success } = await $fetch('/api/menu/add', { method: 'POST', body })
+        // add id to payload if user is editing
+        if (isEditModal.value) {
+            body.id = form.value.id
+        }
+
+        const { success } = await $fetch(endpoint, { method: 'POST', body })
         if (success) {
-            $toast.success('Menu added successfully...')
+            $toast.success(`Menu ${operation} successfully...`)
             // close modal
             closeModal()
         }
     } catch (error) {
-        $toast.error('Oh no! We are unable to create your meal at this time.')
+        $toast.error(`Oh no! We are unable to ${operation} your meal at this time.`)
     } finally {
         isLoading.value = false
     }

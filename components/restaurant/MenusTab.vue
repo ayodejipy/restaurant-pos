@@ -1,10 +1,13 @@
 <script lang="ts" setup>
 import type { GroupedMenu } from '~/utils/types/Menu'
-import { Categories } from '~/utils/enums'
+import { Categories, modals } from '~/utils/enums'
 
 const props = defineProps<{
     categories: GroupedMenu
 }>()
+
+const modalStore = useModalStore()
+const { modalType } = storeToRefs(modalStore)
 
 const getCatergory = (category: string) => Categories[category.toUpperCase()]
 </script>
@@ -47,12 +50,13 @@ const getCatergory = (category: string) => Categories[category.toUpperCase()]
                         'ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2',
                     ]"
                 >
-                    <div class="flex md:gap-6">
+                    <div class="grid grid-cols-3 md:gap-6">
                         <RestaurantMenuItem v-for="menu in menus" :key="menu.id" :menu="menu" />
                     </div>
                 </HeadlessTabPanel>
             </HeadlessTabPanels>
         </HeadlessTabGroup>
+        <RestaurantAddMenuModal :open="modalType == modals.editMenu" />
     </div>
 </template>
 ~/utils/enums
