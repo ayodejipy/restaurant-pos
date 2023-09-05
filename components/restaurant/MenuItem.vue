@@ -14,7 +14,7 @@ const { form } = storeToRefs(menuStore)
 const modalStore = useModalStore()
 const { modalType } = storeToRefs(modalStore)
 
-const isDisabled = computed<boolean>(() => props.menu.is_soldout)
+const isDisabled = computed<boolean>(() => props.menu.available == 0)
 const backgroundColor = computed<string>(() =>
     isDisabled.value ? 'bg-gray-100 shadow-gray-100' : 'bg-white'
 )
@@ -79,18 +79,26 @@ const toggleEdit = () => {
             <div class="relative flex justify-end gap-3 group w-44 h-12">
                 <AtomTheButton
                     intent="default"
-                    class="relative border-2 !py-0 !items-stretch divide-x-2 divide-blue-700 rounded-full transform origin-right transition-all duration-150"
+                    class="relative border-2 !py-0 !items-stretch divide-x-2 rounded-full transform origin-right transition-all duration-150"
                     :class="[
                         isDisabled
-                            ? 'bg-gray-200 text-gray-300 cursor-not-allowed pointer-events-none'
-                            : 'border-blue-600 text-blue-700',
+                            ? 'bg-gray-200 text-gray-300 border-gray-600 divide-gray-700 cursor-not-allowed'
+                            : 'border-blue-600 text-blue-700 divide-blue-700',
                     ]"
+                    :disabled="isDisabled"
                     @click="addToCart(menu)"
                 >
-                    <span class="flex items-center px-4 text-blue-700">Add to list</span>
-                    <span class="flex items-center px-2 text-blue-700"
-                        ><Icon name="ic:baseline-plus"
-                    /></span>
+                    <span
+                        class="flex items-center px-4 text-blue-700"
+                        :class="{ 'text-gray-600': isDisabled }"
+                        >Add to list</span
+                    >
+                    <span
+                        class="flex items-center px-2 text-blue-700"
+                        :class="{ 'text-gray-600': isDisabled }"
+                    >
+                        <Icon name="ic:baseline-plus" />
+                    </span>
                 </AtomTheButton>
             </div>
         </div>
