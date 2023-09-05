@@ -19,7 +19,10 @@ export default function () {
                 sold: sold + quantity,
             }
 
-            const { success } = await $fetch(`api/menu/${id}`, { method: 'PUT', body })
+            const { success } = await $fetch<{ success: boolean }>(`api/menu/${id}`, {
+                method: 'PUT',
+                body,
+            })
 
             if (success) return success
         } catch (error) {
