@@ -31,7 +31,7 @@ const menus = [
             <AtomTheButton
                 variant="default"
                 intent="default"
-                class="relative px-3 font-medium text-sm text-gray-500 border border-gray-300 rounded-lg hover:text-gray-800 lg:mr-3"
+                class="relative px-3 font-medium text-sm text-gray-500 border border-gray-300 hover:text-gray-800 lg:mr-3"
                 @click="modalType = 'add-menu'"
             >
                 <Icon name="ic:outline-add" size="1em" class="mr-2" />

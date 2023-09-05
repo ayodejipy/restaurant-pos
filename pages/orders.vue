@@ -19,13 +19,13 @@ const orders = ref<Order[] | null | undefined>(data.value?.data.data)
     <section class="min-h-screen flex flex-col items-start border-t border-gray-300">
         <div class="w-full max-w-7xl mx-auto space-y-6">
             <h3 class="text-3xl font-medium mt-8">Orders</h3>
-            <div class="w-full flex gap-6 pb-4 overflow-x-auto no-scrollbar">
+            <div class="w-full grid grid-cols-3 gap-6 pb-4">
                 <AtomTheCard
                     v-for="order in orders"
                     :key="order.customer_name"
                     rounded="xl"
                     shadow="lg"
-                    class="bg-white p-4 min-w-[28rem] max-w-full"
+                    class="bg-white p-4 min-w-[18rem] max-w-full"
                     role="button"
                 >
                     <div class="flex items-start justify-between">

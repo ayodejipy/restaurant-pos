@@ -24,9 +24,14 @@ const handleLogin = async () => {
         method: 'POST',
         body,
     })
-    if (data.user)
-        return $toast.success('Login successful. Please check your email for confirmation link.')
-    if (error) return $toast.error('Something went wrong...')
+    if (error) {
+        $toast.error('Something went wrong...')
+        loading.value = false
+        return
+    }
+
+    // otherwise, toast success
+    $toast.success('Login successful. Please check your email for confirmation link.')
     loading.value = false
 }
 </script>

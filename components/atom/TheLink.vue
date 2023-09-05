@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { cva } from 'class-variance-authority'
 
-interface IProps {
+export interface IProps {
     url: string
     leftIcon: string
     size: 'sm' | 'md' | 'lg'

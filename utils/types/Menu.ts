@@ -25,6 +25,7 @@ export interface OrderItems {
     price: number
     quantity: number
     available: number
+    sold: number
 }
 
 export type OrderItemsKey = keyof OrderItems

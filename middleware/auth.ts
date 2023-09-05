@@ -4,7 +4,6 @@ export default defineNuxtRouteMiddleware((to, from) => {
     // const { isAuthenticated } = storeToRefs(userStore)
 
     const user = useSupabaseUser()
-
     if (!user.value) {
         console.log('userr: ', user.value)
 

@@ -8,6 +8,7 @@ export default defineEventHandler(async (event) => {
 
     // create new order
     const data = await client.from('orders').insert(order)
+    console.log({ data })
 
     return {
         success: data.status === 201,

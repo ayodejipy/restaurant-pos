@@ -13,36 +13,37 @@ const { $toast } = useNuxtApp()
 const menuStore = useMenuStore()
 const { bookedOrder } = storeToRefs(menuStore)
 
-const isLoading = ref<boolean>(false)
-
 const subTotal = computed(() =>
     bookedOrder.value.items.reduce(
         (acc: number, meal: OrderItems) => (acc += meal.quantity * meal.price),
         0
     )
 )
-const calculateTax = computed(() => (subTotal.value * tax.value) / 100)
+const calculateTax = computed(() => Math.round((subTotal.value * tax.value) / 100))
 
-async function processOrder() {
-    try {
-        isLoading.value = true
-        const body = {
-            ...bookedOrder.value,
-            subtotal: subTotal.value,
-            tax: calculateTax.value,
-            status: 'waiting',
-        }
+const { isLoading, placeOrder, updateMenuAvailableCount } = processOrder()
 
-        const { success } = await $fetch('/api/order/add', { method: 'POST', body })
-        if (success) {
-            $toast.success('Hurray! Order is been processed...')
-            menuStore.clearBooked()
-        }
-    } catch (error) {
-        $toast.error('Unable to process order, please try again soon.')
-    } finally {
-        isLoading.value = false
-    }
+async function updateAvailableMenu() {
+    isLoading.value = true
+    console.log('', bookedOrder.value.items)
+
+    // subtract quantity bought from available. difference becomes sold
+    const availableMenuItems = bookedOrder.value.items.map((menu) => {
+        const { id, available, quantity, sold } = menu
+
+        const availableItemsLeft = available - quantity
+
+        console.log({ availableItemsLeft })
+
+        return { id, quantity, availableItemsLeft, sold }
+    })
+
+    // make a request to update each menu's availability,
+    await Promise.all(availableMenuItems.map((item) => updateMenuAvailableCount(item)))
+        .then((response) => placeOrder(subTotal.value, calculateTax.value))
+        .catch((error) => {
+            throw new Error('Unable to compute available left count: ', error)
+        })
 }
 </script>
 
@@ -72,7 +73,7 @@ async function processOrder() {
                 intent="default"
                 class="w-full bg-blue-600 text-white font-medium disabled:bg-blue-800 disabled:text-gray-300 disabled:cursor-not-allowed"
                 :disabled="isDisabled"
-                @click="processOrder"
+                @click="updateAvailableMenu"
             >
                 Process Transaction
             </AtomTheButton>
