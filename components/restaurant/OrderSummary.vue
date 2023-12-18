@@ -8,7 +8,7 @@ const props = defineProps<{
 const tax = ref<number>(10)
 
 const { formatted } = useCurrency()
-const { $toast } = useNuxtApp()
+// const { $toast } = useNuxtApp()
 
 const menuStore = useMenuStore()
 const { bookedOrder } = storeToRefs(menuStore)
@@ -21,7 +21,7 @@ const subTotal = computed(() =>
 )
 const calculateTax = computed(() => Math.round((subTotal.value * tax.value) / 100))
 
-const { isLoading, placeOrder, updateMenuAvailableCount } = processOrder()
+const { isLoading, placeOrder, updateMenuAvailableCount } = useProcessOrder()
 
 async function updateAvailableMenu() {
     isLoading.value = true
@@ -30,11 +30,8 @@ async function updateAvailableMenu() {
     // subtract quantity bought from available. difference becomes sold
     const availableMenuItems = bookedOrder.value.items.map((menu) => {
         const { id, available, quantity, sold } = menu
-
+        //  get items left
         const availableItemsLeft = available - quantity
-
-        console.log({ availableItemsLeft })
-
         return { id, quantity, availableItemsLeft, sold }
     })
 

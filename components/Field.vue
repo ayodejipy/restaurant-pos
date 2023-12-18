@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { v4 as uuidv4 } from 'uuid'
 import type { ErrorObject } from '@vuelidate/core'
-import { type IField, DEFAULT_VALUE } from '~/utils/types/Form'
+import { type IField } from '~/utils/types/Form'
 
 const props = withDefaults(defineProps<Partial<IField>>(), {
     id: () => `field-${uuidv4()}`,
@@ -30,6 +30,8 @@ provide(
     <slot />
     <AtomHelperMessage v-if="!!props.help">{{ props.help }}</AtomHelperMessage>
     <template v-if="props.errors.length">
-        <AtomErrorText v-for="error in props.errors">{{ error.$message }}</AtomErrorText>
+        <AtomErrorText v-for="error in props.errors" :key="error.$uid">{{
+            error.$message
+        }}</AtomErrorText>
     </template>
 </template>

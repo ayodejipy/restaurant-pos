@@ -1,6 +1,6 @@
 import { OrderItems } from '~/utils/types/Menu'
 
-export default function () {
+export default function useProcessOrder() {
     const { $toast } = useNuxtApp()
     const isLoading = ref<boolean>(false)
 
